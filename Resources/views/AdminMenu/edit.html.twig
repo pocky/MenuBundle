@@ -1,0 +1,69 @@
+{% extends 'BlackAdminBundle::base.html.twig' %}
+{% block body %}
+
+    {% include 'BlackAdminBundle:Admin:header.html.twig' %}
+    {% include 'BlackAdminBundle:Admin:sidebar.html.twig' %}
+    {% include 'BlackCMSBundle:AdminCMS:sidebar.html.twig' %}
+
+    {% set admin_index = 'admin_menus' %}
+    {% set admin_delete = 'admin_menu_delete' %}
+
+    <div id="content">
+        {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.edit.title"} %}
+        {% include 'BlackMenuBundle:AdminMenu:breadLine.html.twig' with {'route': 'admin_menu_new', 'text': "menu.admin.new"} %}
+
+        <!-- Main content -->
+        <div class="wrapper">
+
+            {% include 'BlackAdminBundle:AdminForm:errors.html.twig' with {'form': form} %}
+            {% include 'BlackAdminBundle:Admin:flashes.html.twig' with {'flashes': app.session.getFlashes()} %}
+
+            <div class="fluid">
+
+                <form id="validate" class="main grid9" action="{{ path('admin_menu_edit', { 'id': document.id }) }}" method="post" {{ form_enctype(form) }}>
+                    <fieldset>
+                        {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "Edit a menu"} %}
+                    </fieldset>
+                </form>
+
+                {% include 'BlackAdminBundle:AdminForm:actions.html.twig' with {'document': document} %}
+
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var itemsCount = '{{ form.items | length }}';
+
+        jQuery(document).ready(function() {
+            jQuery('#black_menu_menu_form_items').children('.formRow').each(function() {
+                addItemFormDeleteLink($(this));
+            });
+
+            jQuery('#add-another-item').click(function() {
+                var itemList = jQuery('#black_menu_menu_form_items');
+
+                var newWidget = itemList.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, itemsCount);
+                itemsCount++;
+
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(jQuery('#black_menu_menu_form_items'));
+
+                return false;
+            });
+
+            function addItemFormDeleteLink($tagFormDiv) {
+                var $removeFormA = $('<a href="#" class="add buttonS bRed mt10">{% trans %}Remove this item{% endtrans %}</a>');
+                $tagFormDiv.first('.formRow .grid9').append($removeFormA);
+
+                $removeFormA.on('click', function(e) {
+                    e.preventDefault();
+                    $tagFormDiv.remove();
+                });
+            }
+        })
+    </script>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% for item in document.items %}
+    <li>
+        <a href="{{ item.url }}" title="{% trans with {'%name%': item.name }%}page.menu.title{% endtrans %}">
+            {{ item.name }}
+        </a>
+    </li>
+{% else %}
+    {% trans %}menu.show.menu.error{% endtrans %}
+{% endfor %}
