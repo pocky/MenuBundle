@@ -18,14 +18,24 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MenuType extends AbstractType
 {
+    /**
+     * @var string
+     */
     private $class;
 
     /**
-     * @param string $class The menu class name
+     * @var
      */
-    public function __construct($class)
+    private $itemType;
+
+    /**
+     * @param $class
+     * @param $itemType
+     */
+    public function __construct($class, $itemType)
     {
-        $this->class = $class;
+        $this->class    = $class;
+        $this->itemType = $itemType;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,7 +51,7 @@ class MenuType extends AbstractType
                 )
             )
             ->add('items', 'collection', array(
-                'type'          => new ItemType(),
+                'type'          => $this->itemType,
                 'label'         => 'menu.admin.form.item.label',
                 'allow_add'     => true,
                 'allow_delete'  => true,

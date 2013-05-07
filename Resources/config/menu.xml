@@ -13,7 +13,13 @@
 
         <service id="black_menu.menu.form.type" class="%black_menu.menu.form.type%">
             <argument>%black_menu.menu.model.class%</argument>
+            <argument type="service" id="black_cms.menu.form.item_type" />
             <tag name="form.type" alias="black_menu_menu" />
+        </service>
+
+        <service id="black_menu.menu.form.item_type" class="%black_menu.menu.form.item_type%">
+            <argument>%black_menu.menu.model.item_class%</argument>
+            <tag name="form.type" alias="black_menu_item" />
         </service>
 
         <service id="black_menu.menu.form.handler" class="%black_menu.menu.form.handler%" scope="request" public="true">

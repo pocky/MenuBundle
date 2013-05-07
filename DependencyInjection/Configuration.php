@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
 
                 ->scalarNode('menu_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('item_class')->isRequired()->cannotBeEmpty()->end()
 
             ->end()
         ;
@@ -57,6 +58,7 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('name')->defaultValue('black_menu_menu_form')->end()
                                 ->scalarNode('type')->defaultValue('Black\\Bundle\\MenuBundle\\Form\\Type\\MenuType')->end()
+                                ->scalarNode('item_type')->defaultValue('Black\\Bundle\\MenuBundle\\Form\\Type\\ItemType')->end()
                                 ->scalarNode('handler')->defaultValue('Black\\Bundle\\MenuBundle\\Form\\Handler\\MenuFormHandler')->end()
                             ->end()
                         ->end()
