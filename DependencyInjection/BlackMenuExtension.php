@@ -39,6 +39,7 @@ class BlackMenuExtension extends Extension
         $this->remapParametersNamespaces($config, $container, array(
                 ''      => array(
                     'menu_class'          => 'black_menu.menu.model.class',
+                    'item_class'          => 'black_menu.menu.model.item_class'
                 )
             ));
 

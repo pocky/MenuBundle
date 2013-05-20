@@ -10,8 +10,6 @@
 
 namespace Black\Bundle\MenuBundle\Document;
 
-use Black\Bundle\MenuBundle\Model\Menu as AbstractMenu;
-use Black\Bundle\EngineBundle\Traits\ThingDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;

@@ -12,12 +12,24 @@
 namespace Black\Bundle\MenuBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ItemType extends AbstractType
 {
+    /**
+     * @var
+     */
+    private $class;
+
+    /**
+     * @param $class
+     */
+    public function __construct($class)
+    {
+        $this->class    = $class;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -41,7 +53,7 @@ class ItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class'    => 'Black\Bundle\MenuBundle\Document\Item',
+                'data_class'    => $this->class,
                 'intention'     => 'item_form'
             )
         );
