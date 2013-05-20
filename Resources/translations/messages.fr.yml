@@ -1,4 +1,7 @@
 menu:
+    show:
+        menu:
+            error: Il n'y a pas encore de menu !
     admin:
         title: Menus
         breadcrumb: Voir vos menus
