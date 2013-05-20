@@ -30,6 +30,10 @@ class MenuController extends Controller
         $documentManager    = $this->getDocumentManager();
         $document           = $documentManager->findMenuBySlug($slug);
 
+        if (!$document) {
+            $document = array('items' => array());
+        }
+
         return array(
             'document' => $document,
         );
