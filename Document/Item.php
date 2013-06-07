@@ -23,7 +23,7 @@ class Item
 {
     /**
      * @ODM\String
-     * @Assert\MaxLength(255)
+     * @Assert\Length(max="255")
      * @Assert\Type(type="string")
      */
     protected $name;
