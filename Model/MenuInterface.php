@@ -12,5 +12,18 @@ namespace Black\Bundle\MenuBundle\Model;
 
 interface MenuInterface
 {
-
+    function getId();
+    
+    function setName($name);
+    function getName();
+    
+    function getSlug();
+    
+    function setDescription($description);
+    function getDescription();
+    
+    function setItems($items);
+    function addItem($item);
+    function removeItem($item);
+    function getItems();
 }

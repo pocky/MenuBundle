@@ -1,0 +1,36 @@
+{% extends 'BlackAdminBundle::base.html.twig' %}
+{% block body %}
+
+    {% include 'BlackAdminBundle:Admin:header.html.twig' %}
+    {% include 'BlackAdminBundle:Admin:sidebar.html.twig' %}
+    {% include 'BlackMenuBundle:AdminMenu:sidebar.html.twig' %}
+
+    {% set admin_index = 'admin_menus' %}
+    {% set admin_delete = 'admin_menu_delete' %}
+    {% set admin_edit = 'admin_menu_edit' %}
+    {% set admin_new = 'admin_menu_new' %}
+
+    <div id="content">
+        {% block content_top %}
+            {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.menu.text"} %}
+        {% endblock %}
+        {% include 'BlackEngineBundle:Admin:breadLine.html.twig' with {
+            'route': admin_new,
+            'text': "menu.admin.breadLine.menu.new.text",
+            'a_route': admin_index,
+            'a_text': "menu.admin.breadLine.menu.breadcrumb.a.text",
+            'a_title': "menu.admin.breadLine.menu.breadcrumb.a.title"
+            }
+        %}
+        <div class="wrapper">
+
+            {% if form is defined %}
+                {% include 'BlackAdminBundle:AdminForm:errors.html.twig' with {'form': form} %}
+            {% endif %}
+            {% include 'BlackAdminBundle:Admin:flashes.html.twig' with {'flashes': app.session.FlashBag()} %}
+
+            {% block page_content %}{% endblock %}
+
+        </div>
+    </div>
+{% endblock %}

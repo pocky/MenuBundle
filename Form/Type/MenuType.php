@@ -42,17 +42,17 @@ class MenuType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                    'label'         => 'menu.admin.form.name'
+                    'label'         => 'menu.admin.menu.name.text'
                 )
             )
             ->add('description', 'textarea', array(
-                    'label'         => 'menu.admin.form.description',
+                    'label'         => 'menu.admin.menu.description.text',
                     'required'      => false
                 )
             )
             ->add('items', 'collection', array(
                 'type'          => $this->itemType,
-                'label'         => 'menu.admin.form.item.label',
+                'label'         => 'menu.admin.menu.item.text',
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'attr'          => array(
