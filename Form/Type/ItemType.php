@@ -38,12 +38,12 @@ class ItemType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                    'label'         => 'menu.admin.form.item.name',
+                    'label'         => 'menu.admin.item.name.text',
                     'required'      => true
                 )
             )
             ->add('url', 'url', array(
-                    'label'         => 'menu.admin.form.item.url',
+                    'label'         => 'menu.admin.item.url.text',
                     'required'      => true
                 )
             )

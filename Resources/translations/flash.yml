@@ -1,0 +1,20 @@
+success:
+  menu:
+    admin:
+      delete: Le menu a bien été supprimé
+      edit: Le menu a bien été édité
+      
+error:
+  menu:
+    admin:
+      batch:
+        no:
+          item: Il faut selectionner au moins un menu
+          action: Il faut selectionner au moins une action
+        csrf: Le formulaire n'est pas valide
+      delete:
+        not:
+          valid: Le formulaire n'est pas valide
+      edit:
+        not:
+          valid: Le formulaire n'est pas valide

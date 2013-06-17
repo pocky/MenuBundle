@@ -42,11 +42,11 @@ class MenuFormHandler
 
             if ($this->form->isValid()) {
 
-                $this->setFlash('success', $menu->getName() . ' was successfully updated!');
+                $this->setFlash('success', 'success.menu.admin.edit');
 
                 return true;
             } else {
-                $this->setFlash('failure', 'The form is not valid');
+                $this->setFlash('error', 'error.menu.admin.edit.not.valid');
             }
         }
     }
