@@ -27,7 +27,7 @@ class MenuController extends Controller
      */
     public function menuAction($slug)
     {
-        $documentManager    = $this->getDocumentManager();
+        $documentManager    = $this->getManager();
         $document           = $documentManager->findMenuBySlug($slug);
 
         if (!$document) {
@@ -44,7 +44,7 @@ class MenuController extends Controller
      *
      * @return DocumentManager
      */
-    protected function getDocumentManager()
+    protected function getManager()
     {
         return $this->get('black_menu.manager.menu');
     }
