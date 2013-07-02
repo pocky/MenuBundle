@@ -1,7 +1,9 @@
 {% extends "BlackMenuBundle:AdminMenu:base.html.twig" %}
+
 {% block content_top %}
     {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.edit.text"} %}
 {% endblock %}
+
 {% block page_content %}
 <div class="fluid">
 
@@ -10,7 +12,8 @@
             {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.edit.text"} %}
         </fieldset>
     </form>
+
     {% include 'BlackAdminBundle:AdminForm:actions.html.twig' with {'document': document} %}
 </div>
-{% include 'BlackMenuBundle:AdminMenu:actions.html.twig' with {'document': document} %}
+
 {% endblock %}
