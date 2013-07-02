@@ -1,56 +1,16 @@
-{% extends 'BlackAdminBundle::base.html.twig' %}
-{% block body %}
+{% extends "BlackMenuBundle:AdminMenu:base.html.twig" %}
+{% block content_top %}
+    {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.new.text"} %}
+{% endblock %}
+{% block page_content %}
+<div class="fluid">
 
-    {% include 'BlackAdminBundle:Admin:header.html.twig' %}
-    {% include 'BlackAdminBundle:Admin:sidebar.html.twig' %}
-    {% include 'BlackCMSBundle:AdminCMS:sidebar.html.twig' %}
-
-    {% set title = "Create a new menu" %}
-    {% set admin_index = 'admin_menus' %}
-    {% set admin_delete = 'admin_menu_delete' %}
-
-    <div id="content">
-        {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "New menu"} %}
-        {% include 'BlackMenuBundle:AdminMenu:breadLine.html.twig' with {'route': 'admin_menu_new', 'text': "New menu"} %}
-
-        <div class="wrapper">
-
-            {% include 'BlackAdminBundle:AdminForm:errors.html.twig' with {'form': form} %}
-            {% include 'BlackAdminBundle:Admin:flashes.html.twig' with {'flashes': app.session.FlashBag()} %}
-
-            <div class="fluid">
-
-                <form id="validate" class="main grid9" action="{{ path('admin_menu_new') }}"  method="post" {{ form_enctype(form) }}>
-                    <fieldset>
-                        {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form} %}
-                    </fieldset>
-                </form>
-
-                {% include 'BlackAdminBundle:AdminForm:actions.html.twig' %}
-
-            </div>
-
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        var itemsCount = '{{ form.items | length }}';
-
-        jQuery(document).ready(function() {
-
-            jQuery('#add-another-item').click(function() {
-                var itemList = jQuery('#black_menu_menu_form_items');
-
-                var newWidget = itemList.attr('data-prototype');
-                newWidget = newWidget.replace(/__name__/g, itemsCount);
-                itemsCount++;
-
-                var newLi = jQuery('<li></li>').html(newWidget);
-                newLi.appendTo(jQuery('#black_menu_menu_form_items'));
-
-                return false;
-            });
-        })
-    </script>
-
+    <form id="validate" class="main grid9" action="{{ path(admin_new) }}"  method="post" {{ form_enctype(form) }}>
+        <fieldset>
+            {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.new.text"} %}
+        </fieldset>
+    </form>
+    {% include 'BlackAdminBundle:AdminForm:actions.html.twig' %}
+</div>
+{% include 'BlackMenuBundle:AdminMenu:actions.html.twig' with {'document': document} %}
 {% endblock %}

@@ -1,0 +1,14 @@
+menu:
+  admin:
+    item:
+      name:
+        text: Nom du lien
+      url:
+        text: Adresse du lien
+    menu:
+      name:
+        text: Nom du lien
+      description:
+        text: Decription
+      item:
+        text: Créer un lien

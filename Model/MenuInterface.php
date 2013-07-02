@@ -12,5 +12,28 @@ namespace Black\Bundle\MenuBundle\Model;
 
 interface MenuInterface
 {
+    /**
+     * @return mixed
+     */
+    public function getId();
 
+    /**
+     * @return mixed
+     */
+    public function getName();
+
+    /**
+     * @return mixed
+     */
+    public function getSlug();
+
+    /**
+     * @return mixed
+     */
+    public function getDescription();
+
+    /**
+     * @return mixed
+     */
+    public function getItems();
 }

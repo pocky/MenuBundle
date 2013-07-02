@@ -61,7 +61,7 @@ class AdminMenuController extends Controller
     public function newAction()
     {
         $documentManager    = $this->getDocumentManager();
-        $document           = $documentManager->createMenu();
+        $document           = $documentManager->createInstance();
 
         $formHandler    = $this->get('black_menu.menu.form.handler');
         $process        = $formHandler->process($document);
@@ -125,7 +125,7 @@ class AdminMenuController extends Controller
      * Deletes a Menu document.
      *
      * @Method({"POST", "GET"})
-     * @Route("/{id}/delete", name="admin_menu_delete")
+     * @Route("/{id}/delete/{token}", name="admin_menu_delete")
      * @Secure(roles="ROLE_ADMIN")
      * @param $id The document ID
      * @param null $token
@@ -140,8 +140,8 @@ class AdminMenuController extends Controller
 
         $form->bind($request);
 
-        if (null === $token) {
-            $token = $this->get('form.csrf_provider')->isCsrfTokenValid('delete' . $id, $request->query->get('token'));
+        if (null !== $token) {
+            $token = $this->get('form.csrf_provider')->isCsrfTokenValid('delete' . $id, $token);
         }
 
         if ($form->isValid() || true === $token) {
@@ -157,10 +157,10 @@ class AdminMenuController extends Controller
             $dm->remove($document);
             $dm->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'This menu was successfully deleted!');
+            $this->get('session')->getFlashBag()->add('success', 'success.menu.admin.delete');
 
         } else {
-            $this->getFlashBag->add('failure', 'The form is not valid');
+            $this->getFlashBag->add('error', 'error.menu.admin.delete.not.valid');
         }
 
         return $this->redirect($this->generateUrl('admin_menus'));
@@ -183,12 +183,12 @@ class AdminMenuController extends Controller
         $token      = $this->get('form.csrf_provider')->isCsrfTokenValid('batch', $request->get('token'));
 
         if (!$ids = $request->get('ids')) {
-            $this->get('session')->getFlashBag()->add('failure', 'You must select at least one item');
+            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.item');
             return $this->redirect($this->generateUrl('admin_menus'));
         }
 
         if (!$action = $request->get('batchAction')) {
-            $this->get('session')->getFlashBag()->add('failure', 'You must select an action to execute on the selected items');
+            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.action');
             return $this->redirect($this->generateUrl('admin_menus'));
         }
 
@@ -199,7 +199,7 @@ class AdminMenuController extends Controller
         }
 
         if (false === $token) {
-            $this->get('session')->getFlashBag()->add('failure', 'CSRF Attack detected! This is bad. Very Bad hombre!');
+            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.csrf');
 
             return $this->redirect($this->generateUrl('admin_menus'));
         }
