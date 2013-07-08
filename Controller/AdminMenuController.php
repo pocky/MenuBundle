@@ -28,8 +28,8 @@ class AdminMenuController extends Controller
      */
     public function indexAction()
     {
-        $documentManager    = $this->getDocumentManager();
-        $repository         = $documentManager->getDocumentRepository();
+        $documentManager    = $this->getManager();
+        $repository         = $documentManager->getRepository();
 
         $rawDocuments       = $repository->findAll();
         $csrf               = $this->container->get('form.csrf_provider');
@@ -60,7 +60,7 @@ class AdminMenuController extends Controller
      */
     public function newAction()
     {
-        $documentManager    = $this->getDocumentManager();
+        $documentManager    = $this->getManager();
         $document           = $documentManager->createInstance();
 
         $formHandler    = $this->get('black_menu.menu.form.handler');
@@ -94,8 +94,8 @@ class AdminMenuController extends Controller
      */
     public function editAction($id)
     {
-        $documentManager = $this->getDocumentManager();
-        $repository = $documentManager->getDocumentRepository();
+        $documentManager = $this->getManager();
+        $repository = $documentManager->getRepository();
 
         $document = $repository->findOneById($id);
 
@@ -146,8 +146,8 @@ class AdminMenuController extends Controller
 
         if ($form->isValid() || true === $token) {
 
-            $dm         = $this->getDocumentManager();
-            $repository = $dm->getDocumentRepository();
+            $dm         = $this->getManager();
+            $repository = $dm->getRepository();
             $document   = $repository->findOneById($id);
 
             if (!$document) {
@@ -226,7 +226,7 @@ class AdminMenuController extends Controller
      *
      * @return DocumentManager
      */
-    protected function getDocumentManager()
+    protected function getManager()
     {
         return $this->get('black_menu.manager.menu');
     }
