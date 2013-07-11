@@ -22,7 +22,7 @@ class AdminMenuController extends Controller
      * Show lists of Menus
      *
      * @Method("GET")
-     * @Route("/index.html", name="admin_menus")
+     * @Route("/index.html", name="admin_menu_index")
      * @Secure(roles="ROLE_ADMIN")
      * @Template()
      */
