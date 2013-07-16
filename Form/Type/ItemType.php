@@ -15,6 +15,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * ItemType
+ */
 class ItemType extends AbstractType
 {
     /**
@@ -23,7 +26,7 @@ class ItemType extends AbstractType
     private $class;
 
     /**
-     * @param $class
+     * @param string $class
      */
     public function __construct($class)
     {
@@ -55,6 +58,9 @@ class ItemType extends AbstractType
             );
     }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
@@ -65,6 +71,9 @@ class ItemType extends AbstractType
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'black_menu_item';

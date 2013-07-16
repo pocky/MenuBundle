@@ -16,6 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * MenuType
+ */
 class MenuType extends AbstractType
 {
     /**
@@ -29,8 +32,8 @@ class MenuType extends AbstractType
     private $itemType;
 
     /**
-     * @param $class
-     * @param $itemType
+     * @param string $class
+     * @param mixed  $itemType
      */
     public function __construct($class, $itemType)
     {
@@ -38,6 +41,10 @@ class MenuType extends AbstractType
         $this->itemType = $itemType;
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array                                        $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -64,6 +71,7 @@ class MenuType extends AbstractType
                     'label'         => 'menu.admin.menu.item.text',
                     'allow_add'     => true,
                     'allow_delete'  => true,
+                    'required'      => false,
                     'attr'          => array(
                         'class' => 'item-collection',
                         'add'   => 'add-another-item'
@@ -72,6 +80,9 @@ class MenuType extends AbstractType
             );
     }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -81,6 +92,9 @@ class MenuType extends AbstractType
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'black_menu_menu';

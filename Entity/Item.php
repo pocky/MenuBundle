@@ -15,22 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
 
 /**
- * Menu Entity
- *
- * @ORM\Table(name="item",indexes={
- *          @ORM\Index(name="name_idx", columns={"name"})
- *      })
- * @ORM\Entity()
+ * Item Entity
  */
-class Item extends AbstractItem
+abstract class Item extends AbstractItem
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     /**
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")

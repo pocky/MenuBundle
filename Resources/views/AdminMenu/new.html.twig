@@ -6,10 +6,9 @@
 <div class="fluid">
 
     <form id="validate" class="main grid9" action="{{ path(admin_new) }}"  method="post" {{ form_enctype(form) }}>
-        <fieldset>
-            {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.new.text"} %}
-        </fieldset>
+        {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.new.text"} %}
     </form>
+    {% include 'BlackMenuBundle:AdminMenu:js.html.twig' with {'document': document} %}
     {% include 'BlackAdminBundle:AdminForm:actions.html.twig' %}
 </div>
 {% endblock %}
