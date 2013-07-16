@@ -41,26 +41,35 @@ class MenuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add(
+                'name',
+                'text',
+                array(
                     'label'         => 'menu.admin.menu.name.text'
                 )
             )
-            ->add('description', 'textarea', array(
+            ->add(
+                'description',
+                'textarea',
+                array(
                     'label'         => 'menu.admin.menu.description.text',
                     'required'      => false
                 )
             )
-            ->add('items', 'collection', array(
-                'type'          => $this->itemType,
-                'label'         => 'menu.admin.menu.item.text',
-                'allow_add'     => true,
-                'allow_delete'  => true,
-                'attr'          => array(
-                    'class' => 'item-collection',
-                    'add'   => 'add-another-item'
-                ),
-            ))
-        ;
+            ->add(
+                'items',
+                'collection',
+                array(
+                    'type'          => $this->itemType,
+                    'label'         => 'menu.admin.menu.item.text',
+                    'allow_add'     => true,
+                    'allow_delete'  => true,
+                    'attr'          => array(
+                        'class' => 'item-collection',
+                        'add'   => 'add-another-item'
+                    ),
+                )
+            );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

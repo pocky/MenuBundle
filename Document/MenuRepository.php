@@ -11,12 +11,14 @@
 namespace Black\Bundle\MenuBundle\Document;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 
+/**
+ * MenuRepository
+ */
 class MenuRepository extends DocumentRepository
 {
-    private function getQueryBuilder()
+    protected function getQueryBuilder($alias = '')
     {
-        return $this->createQueryBuilder();
+        return $this->createQueryBuilder($alias);
     }
 }

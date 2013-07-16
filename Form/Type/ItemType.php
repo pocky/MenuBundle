@@ -37,22 +37,28 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add(
+                'name',
+                'text',
+                array(
                     'label'         => 'menu.admin.item.name.text',
                     'required'      => true
                 )
             )
-            ->add('url', 'url', array(
+            ->add(
+                'url',
+                'url',
+                array(
                     'label'         => 'menu.admin.item.url.text',
                     'required'      => true
                 )
-            )
-        ;
+            );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
                 'data_class'    => $this->class,
                 'intention'     => 'item_form'
             )

@@ -8,75 +8,39 @@
  * file that was distributed with this source code.
  */
 
-namespace Black\Bundle\MenuBundle\Document;
+namespace Black\Bundle\MenuBundle\Entity;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
 
 /**
- * Menu Document
+ * Menu Entity
  *
- * @ODM\EmbeddedDocument()
+ * @ORM\Table(name="item",indexes={
+ *          @ORM\Index(name="name_idx", columns={"name"})
+ *      })
+ * @ORM\Entity()
  */
-class Item
+class Item extends AbstractItem
 {
     /**
-     * @ODM\String
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      * @Assert\Type(type="string")
      */
     protected $name;
 
     /**
-     * @ODM\String
+     * @ORM\Column(name="url", type="string", nullable=true)
      * @Assert\Url
      */
     protected $url;
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string $url
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
 }
