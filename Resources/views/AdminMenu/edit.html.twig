@@ -8,11 +8,10 @@
 <div class="fluid">
 
     <form id="validate" class="main grid9" action="{{ path(admin_edit, { 'id': document.id }) }}" method="post" {{ form_enctype(form) }}>
-        <fieldset>
-            {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.edit.text"} %}
-        </fieldset>
+        {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.edit.text"} %}
     </form>
 
+    {% include 'BlackMenuBundle:AdminMenu:js.html.twig' with {'document': document} %}
     {% include 'BlackAdminBundle:AdminForm:actions.html.twig' with {'document': document} %}
 </div>
 

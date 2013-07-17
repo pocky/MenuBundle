@@ -21,24 +21,22 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('black_menu');
 
-        $supportedDrivers = array('mongodb');
+        $supportedDrivers = array('mongodb', 'orm');
 
         $rootNode
-            ->children()
-
+                ->children()
                 ->scalarNode('db_driver')
                     ->isRequired()
                     ->validate()
                         ->ifNotInArray($supportedDrivers)
-                        ->thenInvalid('The database driver must be either \'mongodb\'.')
+                        ->thenInvalid('The database driver must be either \'mongodb\', \'orm\'.')
                     ->end()
                 ->end()
 
                 ->scalarNode('menu_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('item_class')->isRequired()->cannotBeEmpty()->end()
-
-            ->end()
-        ;
+                ->scalarNode('menu_manager')->defaultValue('Black\\Bundle\\MenuBundle\\Doctrine\\MenuManager')->end()
+            ->end();
 
         $this->addMenuSection($rootNode);
 
@@ -64,7 +62,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
     }
 }

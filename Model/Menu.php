@@ -12,6 +12,9 @@ namespace Black\Bundle\MenuBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Menu
+ */
 class Menu implements MenuInterface
 {
     /**
@@ -25,7 +28,7 @@ class Menu implements MenuInterface
     protected $items;
 
     /**
-     *
+     * Constructor
      */
     public function __construct()
     {
@@ -41,7 +44,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return $this
      */
@@ -69,7 +72,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param $description
+     * @param string $description
      *
      * @return $this
      */
@@ -99,7 +102,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param $item
+     * @param Item $item
      *
      * @return $this
      */
@@ -113,7 +116,7 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param $item
+     * @param Item $item
      *
      * @return $this
      */

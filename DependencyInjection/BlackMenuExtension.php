@@ -39,6 +39,7 @@ class BlackMenuExtension extends Extension
         $this->remapParametersNamespaces($config, $container, array(
                 ''      => array(
                     'menu_class'          => 'black_menu.menu.model.class',
+                    'menu_manager'        => 'black_menu.menu.manager',
                     'item_class'          => 'black_menu.menu.model.item_class'
                 )
             ));
@@ -90,6 +91,9 @@ class BlackMenuExtension extends Extension
         }
     }
 
+    /**
+     * @return string
+     */
     public function getAlias()
     {
         return 'black_menu';
