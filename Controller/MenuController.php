@@ -20,10 +20,14 @@ class MenuController extends Controller
 {
     /**
      * Get a menu (embed action)
-     *
+     * 
+     * @param string $slug
+     * 
      * @Method("GET")
      * @Route("/{slug}", name="_find_menu")
      * @Template()
+     * 
+     * @return Template
      */
     public function menuAction($slug)
     {

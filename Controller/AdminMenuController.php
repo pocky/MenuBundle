@@ -22,9 +22,10 @@ class AdminMenuController extends Controller
      * Show lists of Menus
      *
      * @Method("GET")
-     * @Route("/index.html", name="admin_menus")
+     * @Route("/index.html", name="admin_menu_index")
      * @Secure(roles="ROLE_ADMIN")
      * @Template()
+     * @return Template
      */
     public function indexAction()
     {
@@ -39,8 +40,8 @@ class AdminMenuController extends Controller
         foreach ($rawDocuments as $document) {
 
             $documents[] = array(
-                'id'                                       => $document->getId(),
-                'engine.admin.person.form.givenName'       => $document->getName()
+                'id'                        => $document->getId(),
+                'menu.admin.menu.name.text' => $document->getName()
             );
         }
 
@@ -57,6 +58,7 @@ class AdminMenuController extends Controller
      * @Route("/new", name="admin_menu_new")
      * @Secure(roles="ROLE_ADMIN")
      * @Template()
+     * @return Template
      */
     public function newAction()
     {
@@ -82,12 +84,12 @@ class AdminMenuController extends Controller
     /**
      * Displays a form to edit an existing Menu document.
      *
+     * @param string $id The document ID
+     * 
      * @Method({"GET", "POST"})
      * @Route("/{id}/edit", name="admin_menu_edit")
      * @Secure(roles="ROLE_ADMIN")
      * @Template()
-     *
-     * @param string $id The document ID
      *
      * @return array
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If document doesn't exists
@@ -123,12 +125,13 @@ class AdminMenuController extends Controller
 
     /**
      * Deletes a Menu document.
+     * 
+     * @param string $id    The document ID
+     * @param string $token Token
      *
      * @Method({"POST", "GET"})
      * @Route("/{id}/delete/{token}", name="admin_menu_delete")
      * @Secure(roles="ROLE_ADMIN")
-     * @param $id The document ID
-     * @param null $token
      *
      * @return array
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If document doesn't exists
@@ -184,11 +187,13 @@ class AdminMenuController extends Controller
 
         if (!$ids = $request->get('ids')) {
             $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.item');
+
             return $this->redirect($this->generateUrl('admin_menus'));
         }
 
         if (!$action = $request->get('batchAction')) {
             $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.action');
+
             return $this->redirect($this->generateUrl('admin_menus'));
         }
 

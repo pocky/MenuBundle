@@ -8,28 +8,26 @@
  * file that was distributed with this source code.
  */
 
-namespace Black\Bundle\MenuBundle\Document;
+namespace Black\Bundle\MenuBundle\Entity;
 
-use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
 
 /**
- * Menu Document
- *
- * @ODM\EmbeddedDocument()
+ * Item Entity
  */
-class Item extends AbstractItem
+abstract class Item extends AbstractItem
 {
     /**
-     * @ODM\String
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      * @Assert\Type(type="string")
      */
     protected $name;
 
     /**
-     * @ODM\String
+     * @ORM\Column(name="url", type="string", nullable=true)
      * @Assert\Url
      */
     protected $url;

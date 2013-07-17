@@ -9,10 +9,10 @@
     </parameters>
 
     <services>
-        <service id="black_menu.document.manager" alias="doctrine.odm.mongodb.document_manager" />
+        <service id="black_menu.entity.manager" alias="doctrine.orm.entity_manager" />
 
         <service id="black_menu.manager.menu" class="%black_menu.manager.menu%">
-            <argument type="service" id="black_menu.document.manager" />
+            <argument type="service" id="black_menu.entity.manager" />
             <argument>%black_menu.menu.model.class%</argument>
         </service>
     </services>

@@ -15,6 +15,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * ItemType
+ */
 class ItemType extends AbstractType
 {
     /**
@@ -23,7 +26,7 @@ class ItemType extends AbstractType
     private $class;
 
     /**
-     * @param $class
+     * @param string $class
      */
     public function __construct($class)
     {
@@ -37,28 +40,40 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add(
+                'name',
+                'text',
+                array(
                     'label'         => 'menu.admin.item.name.text',
                     'required'      => true
                 )
             )
-            ->add('url', 'url', array(
+            ->add(
+                'url',
+                'url',
+                array(
                     'label'         => 'menu.admin.item.url.text',
                     'required'      => true
                 )
-            )
-        ;
+            );
     }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
                 'data_class'    => $this->class,
                 'intention'     => 'item_form'
             )
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'black_menu_item';

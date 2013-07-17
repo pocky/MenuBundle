@@ -8,16 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Black\Bundle\MenuBundle\Document;
+namespace Black\Bundle\MenuBundle\Entity;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * MenuRepository
  */
-class MenuRepository extends DocumentRepository
+class MenuRepository extends EntityRepository
 {
-    protected function getQueryBuilder($alias = '')
+    protected function getQueryBuilder($alias = 'm')
     {
         return $this->createQueryBuilder($alias);
     }
