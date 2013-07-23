@@ -166,7 +166,7 @@ class AdminMenuController extends Controller
             $this->getFlashBag->add('error', 'error.menu.admin.delete.not.valid');
         }
 
-        return $this->redirect($this->generateUrl('admin_menus'));
+        return $this->redirect($this->generateUrl('admin_menu_index'));
     }
 
     /**
@@ -188,13 +188,13 @@ class AdminMenuController extends Controller
         if (!$ids = $request->get('ids')) {
             $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.item');
 
-            return $this->redirect($this->generateUrl('admin_menus'));
+            return $this->redirect($this->generateUrl('admin_menu_index'));
         }
 
         if (!$action = $request->get('batchAction')) {
             $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.action');
 
-            return $this->redirect($this->generateUrl('admin_menus'));
+            return $this->redirect($this->generateUrl('admin_menu_index'));
         }
 
         if (!method_exists($this, $method = $action . 'Action')) {
@@ -206,14 +206,14 @@ class AdminMenuController extends Controller
         if (false === $token) {
             $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.csrf');
 
-            return $this->redirect($this->generateUrl('admin_menus'));
+            return $this->redirect($this->generateUrl('admin_menu_index'));
         }
 
         foreach ($ids as $id) {
             $this->$method($id, $token);
         }
 
-        return $this->redirect($this->generateUrl('admin_menus'));
+        return $this->redirect($this->generateUrl('admin_menu_index'));
 
     }
 
