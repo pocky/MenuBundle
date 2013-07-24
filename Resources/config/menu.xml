@@ -13,7 +13,6 @@
 
         <service id="black_menu.menu.form.type" class="%black_menu.menu.form.type%">
             <argument>%black_menu.menu.model.class%</argument>
-            <argument type="service" id="black_cms.menu.form.item_type" />
             <tag name="form.type" alias="black_menu_menu" />
         </service>
 
@@ -26,7 +25,6 @@
             <argument type="service" id="black_menu.menu.form" />
             <argument type="service" id="request" />
             <argument type="service" id="session" />
-            <argument type="service" id="doctrine_mongodb" />
         </service>
     </services>
 </container>

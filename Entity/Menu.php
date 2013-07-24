@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Black\Bundle\MenuBundle\Model\Menu as AbstractMenu;
-use Black\Bundle\EngineBundle\Traits\ThingEntityTrait;
+use Black\Bundle\CommonBundle\Traits\ThingEntityTrait;
 
 /**
  * Menu Entity

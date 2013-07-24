@@ -27,18 +27,12 @@ class MenuType extends AbstractType
     private $class;
 
     /**
-     * @var
-     */
-    private $itemType;
-
-    /**
      * @param string $class
      * @param mixed  $itemType
      */
-    public function __construct($class, $itemType)
+    public function __construct($class)
     {
         $this->class    = $class;
-        $this->itemType = $itemType;
     }
 
     /**
@@ -67,7 +61,7 @@ class MenuType extends AbstractType
                 'items',
                 'collection',
                 array(
-                    'type'          => $this->itemType,
+                    'type'          => 'black_menu_item',
                     'label'         => 'menu.admin.menu.item.text',
                     'allow_add'     => true,
                     'allow_delete'  => true,
