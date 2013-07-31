@@ -17,7 +17,7 @@
         "black/common-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Black\\MenuBundle": "" }
+        "psr-0": { "Black\\Bundle\\MenuBundle": "" }
     },
-    "target-dir": "Black/MenuBundle"
+    "target-dir": "Black/Bundle/MenuBundle"
 }
