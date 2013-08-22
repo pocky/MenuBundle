@@ -7,7 +7,7 @@ menu:
         text: Adresse du lien
     menu:
       name:
-        text: Nom du lien
+        text: Nom du menu
       description:
         text: Decription
       item:
