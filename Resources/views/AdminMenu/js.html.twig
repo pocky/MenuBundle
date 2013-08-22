@@ -16,6 +16,7 @@
 
             var newDiv = jQuery('<div class="formRow noBorderB"></div>').html(newWidget);
             addItemFormDeleteLink(newDiv);
+            JQueryUIApplyStyle(newDiv);
             newDiv.appendTo(jQuery('#black_menu_menu_form_items'));
 
             return false;
@@ -29,6 +30,10 @@
                 e.preventDefault();
                 $tagFormDiv.remove();
             });
+        }
+
+        function JQueryUIApplyStyle($newDiv) {
+            $newDiv.find("select, .check, .check :checkbox, input:radio, input:file").uniform();
         }
     });
 </script>

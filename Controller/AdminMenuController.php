@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Controller managing the person profile`
+ * Controller managing the menus`
  *
  * @Route("/admin/menu")
  */
