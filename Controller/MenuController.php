@@ -12,27 +12,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Controller managing the person profile`
+ * Class MenuController
  *
  * @Route("/menu")
+ *
+ * @package Black\Bundle\MenuBundle\Controller
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class MenuController extends Controller
 {
     /**
-     * Get a menu (embed action)
-     * 
-     * @param string $slug
+     * @param int $id
      * 
      * @Method("GET")
-     * @Route("/{slug}", name="_find_menu")
+     * @Route("/{id}", name="_find_menu")
      * @Template()
      * 
      * @return Template
      */
-    public function menuAction($slug)
+    public function menuAction($id)
     {
         $documentManager    = $this->getManager();
-        $document           = $documentManager->findMenuBySlug($slug);
+        $document           = $documentManager->findMenuById($id);
 
         if (!$document) {
             $document = array('items' => array());
