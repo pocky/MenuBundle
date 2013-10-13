@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Black package.
+ *
+ * (c) Alexandre Balmes <albalmes@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Black\Bundle\MenuBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Processor;
@@ -9,9 +18,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * Class BlackMenuExtension
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * @package Black\Bundle\MenuBundle\DependencyInjection
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class BlackMenuExtension extends Extension
 {

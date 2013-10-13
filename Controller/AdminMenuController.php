@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Black package.
+ *
+ * (c) Alexandre Balmes <albalmes@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Black\Bundle\MenuBundle\Controller;
 
 use Psr\Log\InvalidArgumentException;
@@ -12,9 +21,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Controller managing the menus`
+ * Class AdminMenuController
  *
  * @Route("/admin/menu")
+ *
+ * @package Black\Bundle\MenuBundle\Controller
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class AdminMenuController extends Controller
 {
@@ -69,9 +82,6 @@ class AdminMenuController extends Controller
         $process        = $formHandler->process($document);
 
         if ($process) {
-            $documentManager->persist($document);
-            $documentManager->flush();
-
             return $this->redirect($this->generateUrl('admin_menu_edit', array('id' => $document->getId())));
         }
 
@@ -105,21 +115,16 @@ class AdminMenuController extends Controller
             throw $this->createNotFoundException('Unable to find Menu document.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         $formHandler    = $this->get('black_menu.menu.form.handler');
         $process        = $formHandler->process($document);
 
         if ($process) {
-            $documentManager->flush();
-
             return $this->redirect($this->generateUrl('admin_menu_edit', array('id' => $id)));
         }
 
         return array(
             'document'      => $document,
-            'form'          => $formHandler->getForm()->createView(),
-            'delete_form'   => $deleteForm->createView()
+            'form'          => $formHandler->getForm()->createView()
         );
     }
 
@@ -141,7 +146,7 @@ class AdminMenuController extends Controller
         $form       = $this->createDeleteForm($id);
         $request    = $this->getRequest();
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if (null !== $token) {
             $token = $this->get('form.csrf_provider')->isCsrfTokenValid('delete' . $id, $token);
@@ -154,7 +159,7 @@ class AdminMenuController extends Controller
             $document   = $repository->findOneById($id);
 
             if (!$document) {
-                throw $this->createNotFoundException('Unable to find Person document.');
+                throw $this->createNotFoundException('Unable to find this document.');
             }
 
             $dm->remove($document);

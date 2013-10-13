@@ -1,0 +1,27 @@
+{% set title = title is defined ? title : "admin.admin.fieldset.title.default" %}
+
+<fieldset class="grid9">
+    <div class="widget">
+        <div class="whead"><h6>{{ title|trans({}, "views") }}</h6><div class="clear"></div></div>
+        {{ form_row(form.name) }}
+
+        {{ form_row(form.description) }}
+
+        {{ form_row(form.items) }}
+    </div>
+</fieldset>
+
+<fieldset class="grid3">
+    <div class="widget fixed">
+        <div class="whead"><h6>{% trans from "view" %}black.adminForm.fieldset.actions.header{% endtrans %}</h6>
+            <div class="clear"></div>
+        </div>
+        <div class="body">
+            {{ form_rest(form) }}
+        </div>
+        <div class="clear"></div>
+    </div>
+</fieldset>
+
+{{ elfinder_tinymce_init4() }}
+{{ tinymce_init() }}

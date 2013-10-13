@@ -1,13 +1,15 @@
 {% extends "BlackMenuBundle:AdminMenu:base.html.twig" %}
-{% block content_top %}
-    {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.new.text"} %}
-{% endblock %}
-{% block page_content %}
-<div class="fluid">
 
-    <form id="validate" class="main grid9" action="{{ path(admin_new) }}"  method="post" {{ form_enctype(form) }}>
-        {% include 'BlackAdminBundle:AdminForm:fieldset.html.twig' with {'form': form, 'title': "menu.admin.new.text"} %}
-    </form>
-    {% include 'BlackAdminBundle:AdminForm:actions.html.twig' %}
-</div>
+{% block content_top %}
+    {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.edit.text"} %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="fluid">
+
+        <form id="validate" class="main" action="{{ path(admin_new) }}" method="post" {{ form_enctype(form) }}>
+            {% include 'BlackMenuBundle:AdminMenu:fieldset.html.twig' with {'form': form, 'title': "menu.admin.edit.text"} %}
+        </form>
+    </div>
+
 {% endblock %}

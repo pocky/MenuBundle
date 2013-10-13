@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -15,7 +16,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
 
 /**
- * Item Entity
+ * Class Item
+ *
+ * @package Black\Bundle\MenuBundle\Entity
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 abstract class Item extends AbstractItem
 {

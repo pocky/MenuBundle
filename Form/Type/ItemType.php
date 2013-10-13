@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -16,7 +16,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * ItemType
+ * Class ItemType
+ *
+ * @package Black\Bundle\MenuBundle\Form\Type
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class ItemType extends AbstractType
 {
@@ -40,18 +44,12 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'name',
-                'text',
-                array(
+            ->add('name', 'text', array(
                     'label'         => 'menu.admin.item.name.text',
                     'required'      => true
                 )
             )
-            ->add(
-                'url',
-                'url',
-                array(
+            ->add('url', 'url', array(
                     'label'         => 'menu.admin.item.url.text',
                     'required'      => true
                 )
@@ -65,8 +63,9 @@ class ItemType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'    => $this->class,
-                'intention'     => 'item_form'
+                'data_class'            => $this->class,
+                'intention'             => 'item_form',
+                'translation_domain'    => 'form'
             )
         );
     }

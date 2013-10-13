@@ -13,6 +13,7 @@
 
         <service id="black_menu.menu.form.type" class="%black_menu.menu.form.type%">
             <argument>%black_menu.menu.model.class%</argument>
+            <argument type="service" id="black_admin.form.event.button" />
             <tag name="form.type" alias="black_menu_menu" />
         </service>
 
@@ -23,7 +24,9 @@
 
         <service id="black_menu.menu.form.handler" class="%black_menu.menu.form.handler%" scope="request" public="true">
             <argument type="service" id="black_menu.menu.form" />
+            <argument type="service" id="black_menu.manager.menu" />
             <argument type="service" id="request" />
+            <argument type="service" id="router" />
             <argument type="service" id="session" />
         </service>
     </services>

@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -13,7 +14,11 @@ namespace Black\Bundle\MenuBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Menu
+ * Class Menu
+ *
+ * @package Black\Bundle\MenuBundle\Model
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class Menu implements MenuInterface
 {
