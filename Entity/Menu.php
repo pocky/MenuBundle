@@ -19,18 +19,18 @@ use Black\Bundle\MenuBundle\Model\Menu as AbstractMenu;
 use Black\Bundle\CommonBundle\Traits\ThingEntityTrait;
 
 /**
- * Menu Entity
+ * Class Menu
+ *
+ * @package Black\Bundle\MenuBundle\Entity
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 abstract class Menu extends AbstractMenu
 {
     use ThingEntityTrait;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Item", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="menu_item",
-     *      joinColumns={@ORM\JoinColumn(name="menu_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="menu", cascade={"persist", "remove"})
      */
     protected $items;
 
@@ -40,6 +40,7 @@ abstract class Menu extends AbstractMenu
     public function __construct()
     {
         parent::__construct();
+
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
     }

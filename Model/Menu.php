@@ -97,44 +97,6 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param ArrayCollection $items
-     */
-    public function setItems(ArrayCollection $items)
-    {
-        foreach ($items as $item) {
-            $this->addItem($item);
-        }
-    }
-
-    /**
-     * @param Item $item
-     *
-     * @return $this
-     */
-    public function addItem($item)
-    {
-        if (!$this->getItems()->contains($item)) {
-            $this->getItems()->add($item);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Item $item
-     *
-     * @return $this
-     */
-    public function removeItem($item)
-    {
-        if ($this->getItems()->contains($item)) {
-            $this->getItems()->removeElement($item);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return ArrayCollection
      */
     public function getItems()

@@ -82,7 +82,7 @@ class AdminMenuController extends Controller
         $process        = $formHandler->process($document);
 
         if ($process) {
-            return $this->redirect($this->generateUrl('admin_menu_edit', array('id' => $document->getId())));
+            return $this->redirect($formHandler->getUrl());
         }
 
         return array(
@@ -119,7 +119,7 @@ class AdminMenuController extends Controller
         $process        = $formHandler->process($document);
 
         if ($process) {
-            return $this->redirect($this->generateUrl('admin_menu_edit', array('id' => $id)));
+            return $this->redirect($formHandler->getUrl());
         }
 
         return array(

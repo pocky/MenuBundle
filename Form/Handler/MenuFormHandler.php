@@ -146,6 +146,9 @@ class MenuFormHandler
      */
     protected function onSave(MenuInterface $menu)
     {
+        var_dump($menu->getItems());
+        die;
+
         $this->menuManager->persist($menu);
 
         if (!$menu->getId()) {
@@ -153,13 +156,13 @@ class MenuFormHandler
         }
 
         if ($this->form->get('save')->isClicked()) {
-            $this->setUrl($this->generateUrl('admin_page_edit', array('id' => $menu->getId())));
+            $this->setUrl($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));
 
             return true;
         }
 
         if ($this->form->get('saveAndAdd')->isClicked()) {
-            $this->setUrl($this->generateUrl('admin_page_new'));
+            $this->setUrl($this->generateUrl('admin_menu_new'));
 
             return true;
         }
@@ -176,7 +179,7 @@ class MenuFormHandler
         $this->menuManager->flush();
 
         $this->setFlash('success', 'success.page.admin.page.delete');
-        $this->setUrl($this->generateUrl('admin_page_index'));
+        $this->setUrl($this->generateUrl('admin_menu_index'));
 
         return true;
     }

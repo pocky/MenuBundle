@@ -25,6 +25,12 @@ use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
 abstract class Item extends AbstractItem
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Menu", inversedBy="items", cascade={"all"})
+     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
+     */
+    protected $menu;
+
+    /**
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      * @Assert\Type(type="string")
@@ -36,4 +42,21 @@ abstract class Item extends AbstractItem
      * @Assert\Url
      */
     protected $url;
+
+    /**
+     * @param mixed $menu
+     */
+    public function setMenu(Menu $menu)
+    {
+        $this->menu = $menu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMenu()
+    {
+        return $this->menu;
+    }
+
 }
