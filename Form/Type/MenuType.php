@@ -31,8 +31,8 @@ class MenuType extends AbstractType
     private $class;
 
     /**
-     * @param string $class
-     * @param mixed  $itemType
+     * @param                          $class
+     * @param EventSubscriberInterface $eventSubscriber
      */
     public function __construct($class, EventSubscriberInterface $eventSubscriber)
     {

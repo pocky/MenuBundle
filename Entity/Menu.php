@@ -1,7 +1,6 @@
 <?php
-
 /*
- * This file is part of the Black package.
+ * This file is part of the Blackengine package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -21,6 +20,8 @@ use Black\Bundle\CommonBundle\Traits\ThingEntityTrait;
 /**
  * Class Menu
  *
+ * @ORM\MappedSuperclass(repositoryClass="Black\Bundle\MenuBundle\Entity\MenuRepository")
+ *
  * @package Black\Bundle\MenuBundle\Entity
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
@@ -30,7 +31,11 @@ abstract class Menu extends AbstractMenu
     use ThingEntityTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="menu", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="Item", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="menu_item",
+     *      joinColumns={@ORM\JoinColumn(name="menu_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     *      )
      */
     protected $items;
 
@@ -40,7 +45,6 @@ abstract class Menu extends AbstractMenu
     public function __construct()
     {
         parent::__construct();
-
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
     }

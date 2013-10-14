@@ -20,7 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class Menu implements MenuInterface
+abstract class Menu implements MenuInterface
 {
     /**
      * @var
@@ -94,6 +94,44 @@ class Menu implements MenuInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @param ArrayCollection $items
+     */
+    public function setItems(ArrayCollection $items)
+    {
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
+    }
+
+    /**
+     * @param ItemInterface $item
+     *
+     * @return $this
+     */
+    public function addItem(ItemInterface $item)
+    {
+        if (!$this->getItems()->contains($item)) {
+            $this->getItems()->add($item);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ItemInterface $item
+     *
+     * @return $this
+     */
+    public function removeItem(ItemInterface $item)
+    {
+        if ($this->getItems()->contains($item)) {
+            $this->getItems()->removeElement($item);
+        }
+
+        return $this;
     }
 
     /**

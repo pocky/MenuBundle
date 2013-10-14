@@ -140,20 +140,17 @@ class MenuFormHandler
     }
 
     /**
-     * @param PageInterface $menu
+     * @param MenuInterface $menu
      *
-     * @return mixed
+     * @return bool
      */
     protected function onSave(MenuInterface $menu)
     {
-        var_dump($menu->getItems());
-        die;
-
-        $this->menuManager->persist($menu);
-
         if (!$menu->getId()) {
-            $this->menuManager->flush();
+            $this->menuManager->persist($menu);
         }
+
+        $this->menuManager->flush();
 
         if ($this->form->get('save')->isClicked()) {
             $this->setUrl($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));

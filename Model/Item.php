@@ -18,7 +18,7 @@ namespace Black\Bundle\MenuBundle\Model;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class Item
+abstract class Item implements ItemInterface
 {
     /**
      * @var
