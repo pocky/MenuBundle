@@ -21,7 +21,7 @@ use Doctrine\ORM\EntityRepository;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuRepository extends EntityRepository implements RepositoryInterface
+class MenuRepository extends EntityRepository implements MenuRepositoryInterface
 {
     /**
      * @param $key

@@ -11,7 +11,7 @@
 
 namespace Black\Bundle\MenuBundle\Document;
 
-use Black\Bundle\MenuBundle\Model\RepositoryInterface;
+use Black\Bundle\MenuBundle\Model\MenuRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
@@ -21,7 +21,7 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuRepository extends DocumentRepository implements RepositoryInterface
+class MenuRepository extends DocumentRepository implements MenuRepositoryInterface
 {
     /**
      * @param $key

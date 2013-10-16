@@ -12,13 +12,13 @@
 namespace Black\Bundle\MenuBundle\Model;
 
 /**
- * Class RepositoryInterface
+ * Class MenuRepositoryInterface
  *
  * @package Black\Bundle\MenuBundle\Model
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-interface RepositoryInterface
+interface MenuRepositoryInterface
 {
     /**
      * @param $key
