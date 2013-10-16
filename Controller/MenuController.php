@@ -32,25 +32,50 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class MenuController extends Controller
 {
     /**
-     * @param int $id
-     * 
+     * @param       $key
+     *
      * @Method("GET")
-     * @Route("/{id}", name="_find_menu")
+     * @Route("/{key}", name="_find_menu")
      * @Template()
-     * 
+     *
      * @return Template
      */
-    public function menuAction($id)
+    public function menuAction($key)
     {
         $documentManager    = $this->getManager();
-        $document           = $documentManager->findMenuById($id);
+        $document           = $documentManager->findMenuByIdOrSlug($key);
 
         if (!$document) {
             $document = array('items' => array());
         }
 
         return array(
-            'document' => $document,
+            'document'  => $document,
+            'path'      => $this->getRequest()->get('path')
+        );
+    }
+
+    /**
+     * @param string $key
+     *
+     * @Method("GET")
+     * @Route("/where/{key}", name="_find_where_menu")
+     * @Template()
+     *
+     * @return Template
+     */
+    public function internalMenuAction($key)
+    {
+        $documentManager    = $this->getManager();
+        $document           = $documentManager->findMenuWhereItem($key);
+
+        if (!$document) {
+            $document = array('items' => array());
+        }
+
+        return array(
+            'document'  => $document,
+            'path'      => $this->getRequest()->get('path')
         );
     }
 

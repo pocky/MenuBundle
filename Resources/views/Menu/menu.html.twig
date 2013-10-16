@@ -1,9 +1,26 @@
-{% for item in document.items %}
-    <li>
-        <a href="{{ item.url }}" title="{% trans with {'%name%': item.name } from "views" %}menu.www.menu.a.title{% endtrans %}">
-            {{ item.name }}
+{% if document.items|length > 1 %}
+    <li class="dropdown">
+        <a href="#" title="Accéder à la partie {{ document.name }}" class="dropdown-toggle" data-toggle="dropdown">
+            <span>{{ document.name }}</span>
         </a>
+        <ul class="dropdown-menu">
+
+            {% for item in document.items %}
+                <li class="{% if path == item.url %}current{% endif %}">
+                    <a href="{{ item.url }}" title="{% trans with {'%name%': item.name } from "views" %}menu.www.menu.a.title{% endtrans %}">
+                        {{ item.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
     </li>
 {% else %}
-    <li>{% trans from "views" %}menu.www.menu.error.text{% endtrans %}</li>
-{% endfor %}
+    <li>
+        {% for item in document.items %}
+            <a href="{{ item.url }}" title="{% trans with {'%name%': item.name } from "views" %}menu.www.menu.a.title{% endtrans %}">
+                {{ item.name }}
+            </a>
+        {% endfor %}
+    </li>
+{% endif %}
+

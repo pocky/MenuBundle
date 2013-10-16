@@ -1,0 +1,15 @@
+{% if document.items|length > 1 %}
+    <h1>{{ document.name }}</h1>
+
+    <ul class="sousMenuInterne">
+        {% for item in document.items %}
+            <li class="{% if path == item.url %}active{% endif %}">
+                <a href="{{ item.url }}" title="{% trans with {'%name%': item.name } from "views" %}menu.www.menu.a.title{% endtrans %}">
+                    {{ item.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h1>{{ document.name }}</h1>
+{% endif %}
