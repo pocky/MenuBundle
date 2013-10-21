@@ -1,20 +1,24 @@
 <?php
 
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Black\Bundle\MenuBundle\Form\Handler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Black\Bundle\MenuBundle\Model\MenuInterface;
+use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class MenuFormHandler
@@ -31,9 +35,19 @@ class MenuFormHandler
     protected $request;
 
     /**
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    protected $router;
+
+    /**
      * @var \Symfony\Component\Form\FormInterface
      */
     protected $form;
+
+    /**
+     * @var MenuManagerInteface|\Black\Bundle\MenuBundle\Model\MenuManagerInterface
+     */
+    protected $menuManager;
 
     /**
      * @var
@@ -46,15 +60,24 @@ class MenuFormHandler
     protected $session;
 
     /**
-     * @param FormInterface    $form
-     * @param Request          $request
+     * @var
+     */
+    protected $url;
+
+    /**
+     * @param FormInterface $form
+     * @param MenuManagerInterface $menuManager
+     * @param Request $request
+     * @param Router $router
      * @param SessionInterface $session
      */
-    public function __construct(FormInterface $form, Request $request, SessionInterface $session)
+    public function __construct(FormInterface $form, MenuManagerInterface $menuManager, Request $request, Router $router, SessionInterface $session)
     {
-        $this->form     = $form;
-        $this->request  = $request;
-        $this->session  = $session;
+        $this->form         = $form;
+        $this->menuManager  = $menuManager;
+        $this->request      = $request;
+        $this->router       = $router;
+        $this->session      = $session;
     }
 
     /**
@@ -68,15 +91,16 @@ class MenuFormHandler
 
         if ('POST' === $this->request->getMethod()) {
 
-            $this->form->bind($this->request);
+            $this->form->handleRequest($this->request);
+
+            if ($this->form->has('delete') && $this->form->get('delete')->isClicked()) {
+                return $this->onDelete($menu);
+            }
 
             if ($this->form->isValid()) {
-
-                $this->setFlash('success', 'success.menu.admin.edit');
-
-                return true;
+                return $this->onSave($menu);
             } else {
-                $this->setFlash('error', 'error.menu.admin.edit.not.valid');
+                return $this->onFailed();
             }
         }
     }
@@ -90,6 +114,22 @@ class MenuFormHandler
     }
 
     /**
+     * @param $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
      * @param $name
      * @param $msg
      * @return mixed
@@ -97,5 +137,69 @@ class MenuFormHandler
     protected function setFlash($name, $msg)
     {
         return $this->session->getFlashBag()->add($name, $msg);
+    }
+
+    /**
+     * @param MenuInterface $menu
+     *
+     * @return bool
+     */
+    protected function onSave(MenuInterface $menu)
+    {
+        if (!$menu->getId()) {
+            $this->menuManager->persist($menu);
+        }
+
+        $this->menuManager->flush();
+
+        if ($this->form->get('save')->isClicked()) {
+            $this->setUrl($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));
+
+            return true;
+        }
+
+        if ($this->form->get('saveAndAdd')->isClicked()) {
+            $this->setUrl($this->generateUrl('admin_menu_new'));
+
+            return true;
+        }
+    }
+
+    /**
+     * @param $menu
+     *
+     * @return bool
+     */
+    protected function onDelete($menu)
+    {
+        $this->menuManager->remove($menu);
+        $this->menuManager->flush();
+
+        $this->setFlash('success', 'success.page.admin.page.delete');
+        $this->setUrl($this->generateUrl('admin_menu_index'));
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function onFailed()
+    {
+        $this->setFlash('error', 'error.page.admin.page.not.valid');
+
+        return false;
+    }
+
+    /**
+     * @param       $route
+     * @param array $parameters
+     * @param       $referenceType
+     *
+     * @return mixed
+     */
+    public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 }

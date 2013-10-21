@@ -12,36 +12,13 @@
 namespace Black\Bundle\MenuBundle\Model;
 
 /**
- * Class MenuInterface
+ * Class ItemInterface
  *
  * @package Black\Bundle\MenuBundle\Model
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-interface MenuInterface
+interface ItemInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getId();
 
-    /**
-     * @return mixed
-     */
-    public function getName();
-
-    /**
-     * @return mixed
-     */
-    public function getSlug();
-
-    /**
-     * @return mixed
-     */
-    public function getDescription();
-
-    /**
-     * @return mixed
-     */
-    public function getItems();
 }

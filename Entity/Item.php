@@ -15,7 +15,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Black\Bundle\MenuBundle\Model\Item as AbstractItem;
 
 /**
- * Item Entity
+ * Class Item
+ *
+ * @ORM\MappedSuperclass()
+ *
+ * @package Black\Bundle\MenuBundle\Entity
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 abstract class Item extends AbstractItem
 {

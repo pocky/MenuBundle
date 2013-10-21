@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -12,8 +13,13 @@ namespace Black\Bundle\MenuBundle\Doctrine;
 
 use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+
 /**
- * MenuManager
+ * Class MenuManager
+ *
+ * @package Black\Bundle\MenuBundle\Doctrine
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class MenuManager implements MenuManagerInterface
 {
@@ -48,7 +54,7 @@ class MenuManager implements MenuManagerInterface
     }
 
     /**
-     * @return ObjectManager
+     * @return ObjectManager|mixed
      */
     public function getManager()
     {
@@ -78,7 +84,7 @@ class MenuManager implements MenuManagerInterface
     }
 
     /**
-     * Flush
+     *
      */
     public function flush()
     {
@@ -86,8 +92,6 @@ class MenuManager implements MenuManagerInterface
     }
 
     /**
-     * Remove the model
-     * 
      * @param object $model
      *
      * @throws \InvalidArgumentException
@@ -101,8 +105,6 @@ class MenuManager implements MenuManagerInterface
     }
 
     /**
-     * Save and Flush a new model
-     *
      * @param mixed $model
      */
     public function persistAndFlush($model)
@@ -112,8 +114,6 @@ class MenuManager implements MenuManagerInterface
     }
 
     /**
-     * Remove and flush
-     * 
      * @param mixed $model
      */
     public function removeAndFlush($model)
@@ -123,9 +123,7 @@ class MenuManager implements MenuManagerInterface
     }
 
     /**
-     * Create a new model
-     *
-     * @return $config object
+     * @return mixed
      */
     public function createInstance()
     {
@@ -161,5 +159,25 @@ class MenuManager implements MenuManagerInterface
     public function findMenuBySlug($slug)
     {
         return $this->getRepository()->findOneBySlug($slug);
+    }
+
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function findMenuByIdOrSlug($key)
+    {
+        return $this->getRepository()->getMenuByIdOrSlug($key);
+    }
+
+    /**
+     * @param $key
+     *
+     * @return mixed
+     */
+    public function findMenuWhereItem($key)
+    {
+        return $this->getRepository()->getMenuWhereItem($key);
     }
 }

@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -13,9 +14,13 @@ namespace Black\Bundle\MenuBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Menu
+ * Class Menu
+ *
+ * @package Black\Bundle\MenuBundle\Model
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class Menu implements MenuInterface
+abstract class Menu implements MenuInterface
 {
     /**
      * @var
@@ -102,11 +107,11 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      *
      * @return $this
      */
-    public function addItem($item)
+    public function addItem(ItemInterface $item)
     {
         if (!$this->getItems()->contains($item)) {
             $this->getItems()->add($item);
@@ -116,11 +121,11 @@ class Menu implements MenuInterface
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      *
      * @return $this
      */
-    public function removeItem($item)
+    public function removeItem(ItemInterface $item)
     {
         if ($this->getItems()->contains($item)) {
             $this->getItems()->removeElement($item);

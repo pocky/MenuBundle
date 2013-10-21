@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -12,11 +12,16 @@
 namespace Black\Bundle\MenuBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * MenuType
+ * Class MenuType
+ *
+ * @package Black\Bundle\MenuBundle\Form\Type
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class MenuType extends AbstractType
 {
@@ -26,12 +31,13 @@ class MenuType extends AbstractType
     private $class;
 
     /**
-     * @param string $class
-     * @param mixed  $itemType
+     * @param                          $class
+     * @param EventSubscriberInterface $eventSubscriber
      */
-    public function __construct($class)
+    public function __construct($class, EventSubscriberInterface $eventSubscriber)
     {
-        $this->class    = $class;
+        $this->class            = $class;
+        $this->eventSubscriber  = $eventSubscriber;
     }
 
     /**
@@ -40,26 +46,19 @@ class MenuType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventSubscriber($this->eventSubscriber);
+
         $builder
-            ->add(
-                'name',
-                'text',
-                array(
+            ->add('name', 'text', array(
                     'label'         => 'menu.admin.menu.name.text'
                 )
             )
-            ->add(
-                'description',
-                'textarea',
-                array(
+            ->add('description', 'textarea', array(
                     'label'         => 'menu.admin.menu.description.text',
                     'required'      => false
                 )
             )
-            ->add(
-                'items',
-                'collection',
-                array(
+            ->add('items', 'collection', array(
                     'type'          => 'black_menu_item',
                     'label'         => 'menu.admin.menu.item.text',
                     'allow_add'     => true,
@@ -79,8 +78,9 @@ class MenuType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class'    => $this->class,
-                'intention'     => 'menu_form'
+                'data_class'            => $this->class,
+                'intention'             => 'menu_form',
+                'translation_domain'    => 'form'
             )
         );
     }

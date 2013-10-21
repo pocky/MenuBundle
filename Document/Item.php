@@ -1,6 +1,7 @@
 <?php
+
 /*
- * This file is part of the Blackengine package.
+ * This file is part of the Black package.
  *
  * (c) Alexandre Balmes <albalmes@gmail.com>
  *
@@ -15,9 +16,13 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Menu Document
+ * Class Item
  *
  * @ODM\EmbeddedDocument()
+ *
+ * @package Black\Bundle\MenuBundle\Document
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class Item extends AbstractItem
 {

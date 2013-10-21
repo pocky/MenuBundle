@@ -18,7 +18,13 @@ use Black\Bundle\MenuBundle\Model\Menu as AbstractMenu;
 use Black\Bundle\CommonBundle\Traits\ThingEntityTrait;
 
 /**
- * Menu Entity
+ * Class Menu
+ *
+ * @ORM\MappedSuperclass(repositoryClass="Black\Bundle\MenuBundle\Entity\MenuRepository")
+ *
+ * @package Black\Bundle\MenuBundle\Entity
+ * @author  Alexandre Balmes <albalmes@gmail.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 abstract class Menu extends AbstractMenu
 {
