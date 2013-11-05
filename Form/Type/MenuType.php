@@ -28,7 +28,12 @@ class MenuType extends AbstractType
     /**
      * @var string
      */
-    private $class;
+    protected $class;
+
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    protected $eventSubscriber;
 
     /**
      * @param                          $class
