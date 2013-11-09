@@ -11,7 +11,7 @@
 
 namespace Black\Bundle\MenuBundle\Entity;
 
-use Black\Bundle\MenuBundle\Model\RepositoryInterface;
+use Black\Bundle\MenuBundle\Model\MenuRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -38,7 +38,7 @@ class MenuRepository extends EntityRepository implements MenuRepositoryInterface
             ->setParameter('key', $key)
             ->getQuery();
 
-        return $qb->execute();
+        return $qb->getSingleResult();
     }
 
     /**
@@ -56,9 +56,14 @@ class MenuRepository extends EntityRepository implements MenuRepositoryInterface
             ->setParameter('key', $key)
             ->getQuery();
 
-        return $qb->execute();
+        return $qb->getSingleResult();
     }
 
+    /**
+     * @param string $alias
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     protected function getQueryBuilder($alias = 'm')
     {
         return $this->createQueryBuilder($alias);
