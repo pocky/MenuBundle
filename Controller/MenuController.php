@@ -32,7 +32,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class MenuController extends Controller
 {
     /**
-     * @param       $key
+     * @param string $key
      *
      * @Method("GET")
      * @Route("/{key}", name="_find_menu")

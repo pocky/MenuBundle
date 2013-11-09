@@ -37,7 +37,7 @@ class MenuRepository extends DocumentRepository implements MenuRepositoryInterfa
             ->addOr($qb->expr()->field('slug')->equals($key))
             ->getQuery();
 
-        return $qb->execute();
+        return $qb->getSingleResult();
     }
 
     /**
@@ -54,7 +54,7 @@ class MenuRepository extends DocumentRepository implements MenuRepositoryInterfa
             ->addOr($qb->expr()->field('items.slug')->equals($key))
             ->getQuery();
 
-        return $qb->execute();
+        return $qb->getSingleResult();
     }
 
     /**
