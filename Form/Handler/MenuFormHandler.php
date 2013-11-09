@@ -175,7 +175,7 @@ class MenuFormHandler
         $this->menuManager->remove($menu);
         $this->menuManager->flush();
 
-        $this->setFlash('success', 'success.page.admin.page.delete');
+        $this->setFlash('success', 'black.bundle.menu.success.page.admin.page.delete');
         $this->setUrl($this->generateUrl('admin_menu_index'));
 
         return true;
@@ -186,7 +186,7 @@ class MenuFormHandler
      */
     protected function onFailed()
     {
-        $this->setFlash('error', 'error.page.admin.page.not.valid');
+        $this->setFlash('error', 'black.bundle.menu.error.page.admin.page.not.valid');
 
         return false;
     }

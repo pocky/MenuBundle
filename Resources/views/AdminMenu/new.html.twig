@@ -1,14 +1,14 @@
 {% extends "BlackMenuBundle:AdminMenu:base.html.twig" %}
 
 {% block content_top %}
-    {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.edit.text"} %}
+    {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "black.bundle.menu.adminMenu.new.contentTop.edit.text"} %}
 {% endblock %}
 
 {% block page_content %}
     <div class="fluid">
 
         <form id="validate" class="main" action="{{ path(admin_new) }}" method="post" {{ form_enctype(form) }}>
-            {% include 'BlackMenuBundle:AdminMenu:fieldset.html.twig' with {'form': form, 'title': "menu.admin.edit.text"} %}
+            {% include 'BlackMenuBundle:AdminMenu:fieldset.html.twig' with {'form': form, 'title': "black.bundle.menu.adminMenu.new.edit.text"} %}
         </form>
     </div>
 

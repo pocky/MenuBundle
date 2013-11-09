@@ -165,10 +165,10 @@ class AdminMenuController extends Controller
             $dm->remove($document);
             $dm->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'success.menu.admin.delete');
+            $this->get('session')->getFlashBag()->add('success', 'black.bundle.menu.success.menu.admin.delete');
 
         } else {
-            $this->getFlashBag->add('error', 'error.menu.admin.delete.not.valid');
+            $this->getFlashBag->add('error', 'black.bundle.menu.error.menu.admin.delete.not.valid');
         }
 
         return $this->redirect($this->generateUrl('admin_menu_index'));
@@ -191,13 +191,13 @@ class AdminMenuController extends Controller
         $token      = $this->get('form.csrf_provider')->isCsrfTokenValid('batch', $request->get('token'));
 
         if (!$ids = $request->get('ids')) {
-            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.item');
+            $this->get('session')->getFlashBag()->add('error', 'black.bundle.menu.error.menu.admin.batch.no.item');
 
             return $this->redirect($this->generateUrl('admin_menu_index'));
         }
 
         if (!$action = $request->get('batchAction')) {
-            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.action');
+            $this->get('session')->getFlashBag()->add('error', 'black.bundle.menu.error.menu.admin.batch.no.action');
 
             return $this->redirect($this->generateUrl('admin_menu_index'));
         }
@@ -209,7 +209,7 @@ class AdminMenuController extends Controller
         }
 
         if (false === $token) {
-            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.csrf');
+            $this->get('session')->getFlashBag()->add('error', 'black.bundle.menu.error.menu.admin.batch.csrf');
 
             return $this->redirect($this->generateUrl('admin_menu_index'));
         }

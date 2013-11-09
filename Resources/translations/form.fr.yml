@@ -1,14 +1,15 @@
-menu:
-  admin:
-    item:
-      name:
-        text: Nom du lien
-      url:
-        text: Adresse du lien
-    menu:
-      name:
-        text: Nom du menu
-      description:
-        text: Decription
-      item:
-        text: Créer un lien
+black:
+    bundle:
+        menu:
+            item:
+                name:
+                    text: Nom du lien
+                url:
+                    text: Adresse du lien
+            menu:
+                name:
+                    text: Nom du menu
+                description:
+                    text: Description
+                item:
+                    text: Créer un lien
