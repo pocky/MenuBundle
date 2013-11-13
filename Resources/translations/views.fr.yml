@@ -24,7 +24,7 @@ black:
                     title:
                         default: Créer une nouvelle chose
                     actions:
-                        header: !n!
+                        header: Actions
                 index:
                     menus:
                         text: Menu

@@ -54,7 +54,7 @@ class AdminMenuController extends Controller
 
             $documents[] = array(
                 'id'                        => $document->getId(),
-                'menu.admin.menu.name.text' => $document->getName()
+                'black.bundle.menu.menu.name.text' => $document->getName()
             );
         }
 
