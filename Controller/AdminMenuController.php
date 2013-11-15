@@ -11,6 +11,7 @@
 
 namespace Black\Bundle\MenuBundle\Controller;
 
+use Black\Bundle\MenuBundle\Exception\MenuNotFoundException;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -160,7 +161,7 @@ class AdminMenuController extends Controller
             $document   = $repository->findOneById($id);
 
             if (!$document) {
-                throw $this->createNotFoundException('Unable to find this document.');
+                throw new MenuNotFoundException();
             }
 
             $dm->remove($document);
