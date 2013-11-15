@@ -154,12 +154,14 @@ class MenuFormHandler
 
         if ($this->form->get('save')->isClicked()) {
             $this->setUrl($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));
+            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
 
             return true;
         }
 
         if ($this->form->get('saveAndAdd')->isClicked()) {
             $this->setUrl($this->generateUrl('admin_menu_new'));
+            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
 
             return true;
         }
@@ -175,7 +177,7 @@ class MenuFormHandler
         $this->menuManager->remove($menu);
         $this->menuManager->flush();
 
-        $this->setFlash('success', 'black.bundle.menu.success.page.admin.page.delete');
+        $this->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
         $this->setUrl($this->generateUrl('admin_menu_index'));
 
         return true;
@@ -186,7 +188,7 @@ class MenuFormHandler
      */
     protected function onFailed()
     {
-        $this->setFlash('error', 'black.bundle.menu.error.page.admin.page.not.valid');
+        $this->setFlash('error', 'black.bundle.menu.error.menu.admin.edit.not.valid');
 
         return false;
     }

@@ -82,6 +82,7 @@ class AdminMenuController extends Controller
         $process        = $formHandler->process($document);
 
         if ($process) {
+
             return $this->redirect($formHandler->getUrl());
         }
 

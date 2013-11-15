@@ -6,6 +6,9 @@ black:
                     admin:
                         delete: Le menu a bien été supprimé
                         edit: Le menu a bien été édité
+                        save: Le menu est bien sauvé
+                        saveAndAdd: Le menu est bien ajouté, créez en en un nouveau
+
             error:
                 menu:
                     admin:
