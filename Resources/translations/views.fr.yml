@@ -1,47 +1,44 @@
-menu:
-  admin:
-    breadLine:
-      menu:
-        breadcrumb:
-          a:
-            text: Gérer les menus
-            title: Gérer les menus
-        new:
-          text: Créer une menu
-      shortcut:
-        text: Raccourci
-        
-    contentTop:
-      menu:
-        text: Menu
-      edit:
-        text: Editer un menu
-      new:
-        text: Créer une menu
-    
-    edit:
-      text: Editer un menu
-    
-    index:
-      menus:
-        text: Menus
-    
-    new:
-      text: Créer une menu
-    
-    js:
-      remove:
-        text: Enlever
-        
-    sidebar:
-      menus:
-        text: Menus
-        a:
-          text: Liste des menus
-          title: Voir vos menus
-  www:
-    menu:
-      error:
-        text: Il n'y a pas encore de menu !
-      a:
-        title: Lien vers %name%
+black:
+    bundle:
+        menu:
+            adminMenu:
+                base:
+                    contentTop:
+                        menu:
+                            text: Menu
+                    breadLine:
+                        menu:
+                            new:
+                                text: Créer un menu
+                            breadcrumb:
+                                a:
+                                    text: Gérer les menus
+                                    title: Gérer les menus
+
+                edit:
+                    text: Editer un menu
+                    contentTop:
+                        edit:
+                            text: Editer un menu
+                fieldset:
+                    title:
+                        default: Créer une nouvelle chose
+                    actions:
+                        header: Actions
+                index:
+                    menus:
+                        text: Menu
+                new:
+                    edit:
+                        text: Editer un menu
+                    contentTop:
+                        edit:
+                            text: Editer un menu
+                sidebar:
+                    menus:
+                        text: Menus
+                        a:
+                            text: Liste des menus
+                            title: Voir vos menus
+
+

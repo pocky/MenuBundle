@@ -28,7 +28,12 @@ class MenuType extends AbstractType
     /**
      * @var string
      */
-    private $class;
+    protected $class;
+
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    protected $eventSubscriber;
 
     /**
      * @param                          $class
@@ -50,17 +55,17 @@ class MenuType extends AbstractType
 
         $builder
             ->add('name', 'text', array(
-                    'label'         => 'menu.admin.menu.name.text'
+                    'label'         => 'black.bundle.menu.menu.name.text'
                 )
             )
             ->add('description', 'textarea', array(
-                    'label'         => 'menu.admin.menu.description.text',
+                    'label'         => 'black.bundle.menu.menu.description.text',
                     'required'      => false
                 )
             )
             ->add('items', 'collection', array(
                     'type'          => 'black_menu_item',
-                    'label'         => 'menu.admin.menu.item.text',
+                    'label'         => 'black.bundle.menu.menu.item.text',
                     'allow_add'     => true,
                     'allow_delete'  => true,
                     'required'      => false,

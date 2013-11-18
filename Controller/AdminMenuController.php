@@ -11,6 +11,7 @@
 
 namespace Black\Bundle\MenuBundle\Controller;
 
+use Black\Bundle\MenuBundle\Exception\MenuNotFoundException;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class AdminMenuController extends Controller
 
             $documents[] = array(
                 'id'                        => $document->getId(),
-                'menu.admin.menu.name.text' => $document->getName()
+                'black.bundle.menu.menu.name.text' => $document->getName()
             );
         }
 
@@ -82,6 +83,7 @@ class AdminMenuController extends Controller
         $process        = $formHandler->process($document);
 
         if ($process) {
+
             return $this->redirect($formHandler->getUrl());
         }
 
@@ -159,16 +161,16 @@ class AdminMenuController extends Controller
             $document   = $repository->findOneById($id);
 
             if (!$document) {
-                throw $this->createNotFoundException('Unable to find this document.');
+                throw new MenuNotFoundException();
             }
 
             $dm->remove($document);
             $dm->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'success.menu.admin.delete');
+            $this->get('session')->getFlashBag()->add('success', 'black.bundle.menu.success.menu.admin.delete');
 
         } else {
-            $this->getFlashBag->add('error', 'error.menu.admin.delete.not.valid');
+            $this->getFlashBag->add('error', 'black.bundle.menu.error.menu.admin.delete.not.valid');
         }
 
         return $this->redirect($this->generateUrl('admin_menu_index'));
@@ -191,13 +193,13 @@ class AdminMenuController extends Controller
         $token      = $this->get('form.csrf_provider')->isCsrfTokenValid('batch', $request->get('token'));
 
         if (!$ids = $request->get('ids')) {
-            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.item');
+            $this->get('session')->getFlashBag()->add('error', 'black.bundle.menu.error.menu.admin.batch.no.item');
 
             return $this->redirect($this->generateUrl('admin_menu_index'));
         }
 
         if (!$action = $request->get('batchAction')) {
-            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.no.action');
+            $this->get('session')->getFlashBag()->add('error', 'black.bundle.menu.error.menu.admin.batch.no.action');
 
             return $this->redirect($this->generateUrl('admin_menu_index'));
         }
@@ -209,7 +211,7 @@ class AdminMenuController extends Controller
         }
 
         if (false === $token) {
-            $this->get('session')->getFlashBag()->add('error', 'error.menu.admin.batch.csrf');
+            $this->get('session')->getFlashBag()->add('error', 'black.bundle.menu.error.menu.admin.batch.csrf');
 
             return $this->redirect($this->generateUrl('admin_menu_index'));
         }

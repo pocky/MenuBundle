@@ -12,14 +12,14 @@
 
     <div id="content">
         {% block content_top %}
-            {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "menu.admin.contentTop.menu.text"} %}
+            {% include 'BlackAdminBundle:Admin:contentTop.html.twig' with {'title': "black.bundle.menu.adminMenu.base.contentTop.menu.text"} %}
         {% endblock %}
         {% include 'BlackConfigBundle:Admin:breadLine.html.twig' with {
             'route': admin_new,
-            'text': "menu.admin.breadLine.menu.new.text",
+            'text': "black.bundle.menu.adminMenu.base.breadLine.menu.new.text",
             'a_route': admin_index,
-            'a_text': "menu.admin.breadLine.menu.breadcrumb.a.text",
-            'a_title': "menu.admin.breadLine.menu.breadcrumb.a.title"
+            'a_text': "black.bundle.menu.adminMenu.base.breadLine.menu.breadcrumb.a.text",
+            'a_title': "black.bundle.menu.adminMenu.base.breadLine.menu.breadcrumb.a.title"
             }
         %}
         <div class="wrapper">
