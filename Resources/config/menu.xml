@@ -13,7 +13,7 @@
 
         <service id="black_menu.menu.form.type" class="%black_menu.menu.form.type%">
             <argument>%black_menu.menu.model.class%</argument>
-            <argument type="service" id="black_admin.form.event.button" />
+            <argument type="service" id="black_assets.form.event.button" />
             <tag name="form.type" alias="black_menu_menu" />
         </service>
 

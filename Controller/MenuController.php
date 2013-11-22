@@ -11,39 +11,138 @@
 
 namespace Black\Bundle\MenuBundle\Controller;
 
-use Psr\Log\InvalidArgumentException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Black\Bundle\CommonBundle\Controller\ControllerInterface;
+use Black\Bundle\CommonBundle\Doctrine\ManagerInterface;
+use Black\Bundle\CommonBundle\Form\Handler\HandlerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Class MenuController
  *
- * @Route("/menu")
+ * @Route("/menu", service="black_menu.controller.menu")
  *
  * @package Black\Bundle\MenuBundle\Controller
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuController extends Controller
+class MenuController implements ControllerInterface
 {
     /**
+     * @var \Black\Bundle\CommonBundle\Controller\ControllerInterface
+     */
+    protected $controller;
+    /**
+     * @var \Black\Bundle\CommonBundle\Doctrine\ManagerInterface
+     */
+    protected $manager;
+    /**
+     * @var \Black\Bundle\CommonBundle\Form\Handler\HandlerInterface
+     */
+    protected $handler;
+
+    /**
+     * @param ControllerInterface $controller
+     * @param ManagerInterface    $manager
+     * @param HandlerInterface    $handler
+     */
+    public function __construct(
+        ControllerInterface $controller,
+        HttpExceptionInterface $exception,
+        ManagerInterface $manager,
+        HandlerInterface $handler
+    )
+    {
+        $this->controller   = $controller;
+        $this->manager      = $manager;
+        $this->handler      = $handler;
+
+        $controller->setException($exception);
+        $controller->setManager($manager);
+        $controller->setHandler($handler);
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/new", name="menu_create")
+     * @Template()
+     *
+     * @return array
+     */
+    public function createAction()
+    {
+        return $this->controller->createAction();
+    }
+
+    /**
+     * @Method({"POST", "GET"})
+     * @Route("/{value}/delete", name="menu_delete")
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function deleteAction($value)
+    {
+        return $this->controller->deleteAction($value);
+    }
+
+    /**
+     * @Method("GET")
+     * @Route("/index.html", name="menu_index")
+     * @Template()
+     *
+     * @return array
+     */
+    public function indexAction()
+    {
+        return $this->controller->indexAction();
+    }
+
+    /**
+     * @Method("GET")
+     * @Route("/{value}.html", name="menu_show")
+     * @Template()
+     *
+     * @param string $slug
+     *
+     * @return Template
+     */
+    public function showAction($value)
+    {
+        return $this->controller->showAction($value);
+    }
+
+    /**
+     * @Method({"GET", "POST"})
+     * @Route("/{value}/update", name="menu_update")
+     * @Template()
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function updateAction($value)
+    {
+        return $this->controller->updateAction($value);
+    }
+
+    /**
      * @param string $key
      *
      * @Method("GET")
-     * @Route("/{key}", name="_find_menu")
+     * @Route("/{value}", name="_find_menu")
      * @Template()
      *
      * @return Template
      */
-    public function menuAction($key)
+    public function menuAction($value)
     {
         $documentManager    = $this->getManager();
-        $document           = $documentManager->findMenuByIdOrSlug($key);
+        $document           = $documentManager->findDocument($value);
 
         if (!$document) {
             $document = array('items' => array());
@@ -51,7 +150,7 @@ class MenuController extends Controller
 
         return array(
             'document'  => $document,
-            'path'      => $this->getRequest()->get('path')
+            'path'      => $this->controller->getRequest()->get('path')
         );
     }
 
@@ -59,15 +158,15 @@ class MenuController extends Controller
      * @param string $key
      *
      * @Method("GET")
-     * @Route("/where/{key}", name="_find_where_menu")
+     * @Route("/where/{value}", name="_find_where_menu")
      * @Template()
      *
      * @return Template
      */
-    public function internalMenuAction($key)
+    public function internalMenuAction($value)
     {
         $documentManager    = $this->getManager();
-        $document           = $documentManager->findMenuWhereItem($key);
+        $document           = $documentManager->findMenuWhereItem($value);
 
         if (!$document) {
             $document = array('items' => array());
@@ -75,17 +174,31 @@ class MenuController extends Controller
 
         return array(
             'document'  => $document,
-            'path'      => $this->getRequest()->get('path')
+            'path'      => $this->controller->getRequest()->get('path')
         );
     }
 
     /**
-     * Returns the DocumentManager
-     *
-     * @return DocumentManager
+     * @return ManagerInterface
      */
-    protected function getManager()
+    public function getManager()
     {
-        return $this->get('black_menu.manager.menu');
+        return $this->manager;
+    }
+
+    /**
+     * @return HandlerInterface
+     */
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getException()
+    {
+        return $this->exception;
     }
 }

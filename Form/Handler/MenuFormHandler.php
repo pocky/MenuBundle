@@ -19,6 +19,7 @@ use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Black\Bundle\MenuBundle\Model\MenuInterface;
 use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Black\Bundle\CommonBundle\Form\Handler\HandlerInterface;
 
 /**
  * Class MenuFormHandler
@@ -27,7 +28,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuFormHandler
+class MenuFormHandler implements HandlerInterface
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -85,7 +86,7 @@ class MenuFormHandler
      *
      * @return bool
      */
-    public function process(MenuInterface $menu)
+    public function process($menu)
     {
         $this->form->setData($menu);
 
@@ -153,14 +154,14 @@ class MenuFormHandler
         $this->menuManager->flush();
 
         if ($this->form->get('save')->isClicked()) {
-            $this->setUrl($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));
+            $this->setUrl($this->generateUrl('menu_update', array('id' => $menu->getId())));
             $this->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
 
             return true;
         }
 
         if ($this->form->get('saveAndAdd')->isClicked()) {
-            $this->setUrl($this->generateUrl('admin_menu_new'));
+            $this->setUrl($this->generateUrl('menu_create'));
             $this->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
 
             return true;
@@ -172,13 +173,13 @@ class MenuFormHandler
      *
      * @return bool
      */
-    protected function onDelete($menu)
+    protected function onDelete(MenuInterface $menu)
     {
         $this->menuManager->remove($menu);
         $this->menuManager->flush();
 
         $this->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
-        $this->setUrl($this->generateUrl('admin_menu_index'));
+        $this->setUrl($this->generateUrl('menu_index'));
 
         return true;
     }
