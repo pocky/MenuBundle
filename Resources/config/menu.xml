@@ -28,6 +28,13 @@
             <argument type="service" id="request" />
             <argument type="service" id="router" />
             <argument type="service" id="session" />
+            <argument type="collection">
+                <argument key="route" type="collection">
+                    <argument key="index">menu_index</argument>
+                    <argument key="create">menu_create</argument>
+                    <argument key="update">menu_update</argument>
+                </argument>
+            </argument>
         </service>
     </services>
 </container>

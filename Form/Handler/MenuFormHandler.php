@@ -66,16 +66,29 @@ class MenuFormHandler implements HandlerInterface
     protected $url;
 
     /**
+     * @var
+     */
+    protected $parameters;
+
+    /**
      * @param FormInterface $form
      * @param MenuManagerInterface $menuManager
      * @param Request $request
      * @param Router $router
      * @param SessionInterface $session
      */
-    public function __construct(FormInterface $form, MenuManagerInterface $menuManager, Request $request, Router $router, SessionInterface $session)
+    public function __construct(
+        FormInterface $form,
+        MenuManagerInterface $menuManager,
+        Request $request,
+        Router $router,
+        SessionInterface $session,
+        array $parameters = array()
+    )
     {
         $this->form         = $form;
         $this->menuManager  = $menuManager;
+        $this->parameters   = $parameters;
         $this->request      = $request;
         $this->router       = $router;
         $this->session      = $session;
@@ -154,14 +167,14 @@ class MenuFormHandler implements HandlerInterface
         $this->menuManager->flush();
 
         if ($this->form->get('save')->isClicked()) {
-            $this->setUrl($this->generateUrl('menu_update', array('id' => $menu->getId())));
+            $this->setUrl($this->generateUrl($this->parameters['route']['update'], array('id' => $menu->getId())));
             $this->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
 
             return true;
         }
 
         if ($this->form->get('saveAndAdd')->isClicked()) {
-            $this->setUrl($this->generateUrl('menu_create'));
+            $this->setUrl($this->generateUrl($this->parameters['route']['create']));
             $this->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
 
             return true;
@@ -179,7 +192,7 @@ class MenuFormHandler implements HandlerInterface
         $this->menuManager->flush();
 
         $this->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
-        $this->setUrl($this->generateUrl('menu_index'));
+        $this->setUrl($this->generateUrl($this->parameters['route']['index']));
 
         return true;
     }

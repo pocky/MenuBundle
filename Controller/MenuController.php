@@ -36,18 +36,19 @@ class MenuController implements ControllerInterface
      */
     protected $controller;
     /**
-     * @var \Black\Bundle\CommonBundle\Doctrine\ManagerInterface
-     */
-    protected $manager;
-    /**
      * @var \Black\Bundle\CommonBundle\Form\Handler\HandlerInterface
      */
     protected $handler;
+    /**
+     * @var \Black\Bundle\CommonBundle\Doctrine\ManagerInterface
+     */
+    protected $manager;
 
     /**
-     * @param ControllerInterface $controller
-     * @param ManagerInterface    $manager
-     * @param HandlerInterface    $handler
+     * @param ControllerInterface    $controller
+     * @param HttpExceptionInterface $exception
+     * @param ManagerInterface       $manager
+     * @param HandlerInterface       $handler
      */
     public function __construct(
         ControllerInterface $controller,
@@ -91,6 +92,30 @@ class MenuController implements ControllerInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getException()
+    {
+        return $this->exception;
+    }
+
+    /**
+     * @return HandlerInterface
+     */
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
+     * @return ManagerInterface
+     */
+    public function getManager()
+    {
+        return $this->manager;
+    }
+
+    /**
      * @Method("GET")
      * @Route("/index.html", name="menu_index")
      * @Template()
@@ -100,6 +125,54 @@ class MenuController implements ControllerInterface
     public function indexAction()
     {
         return $this->controller->indexAction();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @Method("GET")
+     * @Route("/where/{value}", name="_find_where_menu")
+     * @Template()
+     *
+     * @return Template
+     */
+    public function internalMenuAction($value)
+    {
+        $documentManager    = $this->getManager();
+        $document           = $documentManager->findMenuWhereItem($value);
+
+        if (!$document) {
+            $document = array('items' => array());
+        }
+
+        return array(
+            'document'  => $document,
+            'path'      => $this->controller->getRequest()->get('path')
+        );
+    }
+
+    /**
+     * @param string $key
+     *
+     * @Method("GET")
+     * @Route("/{value}", name="_find_menu")
+     * @Template()
+     *
+     * @return Template
+     */
+    public function menuAction($value)
+    {
+        $documentManager    = $this->getManager();
+        $document           = $documentManager->findDocument($value);
+
+        if (!$document) {
+            $document = array('items' => array());
+        }
+
+        return array(
+            'document'  => $document,
+            'path'      => $this->controller->getRequest()->get('path')
+        );
     }
 
     /**
@@ -128,77 +201,5 @@ class MenuController implements ControllerInterface
     public function updateAction($value)
     {
         return $this->controller->updateAction($value);
-    }
-
-    /**
-     * @param string $key
-     *
-     * @Method("GET")
-     * @Route("/{value}", name="_find_menu")
-     * @Template()
-     *
-     * @return Template
-     */
-    public function menuAction($value)
-    {
-        $documentManager    = $this->getManager();
-        $document           = $documentManager->findDocument($value);
-
-        if (!$document) {
-            $document = array('items' => array());
-        }
-
-        return array(
-            'document'  => $document,
-            'path'      => $this->controller->getRequest()->get('path')
-        );
-    }
-
-    /**
-     * @param string $key
-     *
-     * @Method("GET")
-     * @Route("/where/{value}", name="_find_where_menu")
-     * @Template()
-     *
-     * @return Template
-     */
-    public function internalMenuAction($value)
-    {
-        $documentManager    = $this->getManager();
-        $document           = $documentManager->findMenuWhereItem($value);
-
-        if (!$document) {
-            $document = array('items' => array());
-        }
-
-        return array(
-            'document'  => $document,
-            'path'      => $this->controller->getRequest()->get('path')
-        );
-    }
-
-    /**
-     * @return ManagerInterface
-     */
-    public function getManager()
-    {
-        return $this->manager;
-    }
-
-    /**
-     * @return HandlerInterface
-     */
-    public function getHandler()
-    {
-        return $this->handler;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getException()
-    {
-        return $this->exception;
     }
 }
