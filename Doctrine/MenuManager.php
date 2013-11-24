@@ -11,7 +11,6 @@
 
 namespace Black\Bundle\MenuBundle\Doctrine;
 
-use Black\Bundle\MenuBundle\Model\MenuInterface;
 use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
 use Black\Bundle\CommonBundle\Doctrine\ManagerInterface;
 use Doctrine\Common\Persistence\ObjectManager;

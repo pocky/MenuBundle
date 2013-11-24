@@ -64,6 +64,11 @@ class BlackMenuExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param XmlFileLoader    $loader
+     */
     private function loadMenu(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
         foreach (array('menu') as $basename) {
@@ -93,6 +98,11 @@ class BlackMenuExtension extends Extension
         );
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $map
+     */
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)
     {
         foreach ($map as $name => $paramName) {
@@ -102,6 +112,11 @@ class BlackMenuExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $namespaces
+     */
     protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
     {
         foreach ($namespaces as $ns => $map) {
