@@ -64,4 +64,13 @@ class MenuRepository extends DocumentRepository implements MenuRepositoryInterfa
     {
         return $this->createQueryBuilder();
     }
+
+    /**
+     * @todo to test
+     * @return string
+     */
+    public function countMenus()
+    {
+        return $qb = $this->getQueryBuilder()->getQuery()->execute()->count();
+    }
 }

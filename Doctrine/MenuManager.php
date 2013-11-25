@@ -182,4 +182,9 @@ class MenuManager implements MenuManagerInterface, ManagerInterface
     {
         return $this->getRepository()->getMenuWhereItem($key);
     }
+
+    public function countMenus()
+    {
+        return $this->getRepository()->countMenus();
+    }
 }

@@ -68,4 +68,21 @@ class MenuRepository extends EntityRepository implements MenuRepositoryInterface
     {
         return $this->createQueryBuilder($alias);
     }
+
+    public function countMenus()
+    {
+        $qb = $this->getQueryBuilder()
+            ->select('count(m)')
+            ->getQuery();
+
+        try {
+            $menu = $qb->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            throw new EntityNotFoundException(
+                sprintf('No menu founded')
+            );
+        }
+
+        return $menu;
+    }
 }
