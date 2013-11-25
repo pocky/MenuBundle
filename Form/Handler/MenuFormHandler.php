@@ -155,8 +155,8 @@ class MenuFormHandler implements HandlerInterface
      */
     protected function onDelete(MenuInterface $menu)
     {
-        $this->menuManager->remove($menu);
-        $this->menuManager->flush();
+        $this->manager->remove($menu);
+        $this->manager->flush();
 
         $this->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
         $this->setUrl($this->generateUrl($this->parameters['route']['index']));
@@ -182,10 +182,10 @@ class MenuFormHandler implements HandlerInterface
     protected function onSave(MenuInterface $menu)
     {
         if (!$menu->getId()) {
-            $this->menuManager->persist($menu);
+            $this->manager->persist($menu);
         }
 
-        $this->menuManager->flush();
+        $this->manager->flush();
 
         if ($this->form->get('save')->isClicked()) {
             $this->setUrl($this->generateUrl($this->parameters['route']['update'], array('id' => $menu->getId())));
