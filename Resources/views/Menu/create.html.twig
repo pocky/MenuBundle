@@ -1,0 +1,12 @@
+{% extends 'BlackMenuBundle:Menu:base.html.twig' %}
+
+{% block body %}
+    <header>
+        <h2>Create Menu</h2>
+    </header>
+
+    <form id="validate" class="main" action="{{ path('menu_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_rest(form) }}
+    </form>
+
+{% endblock %}

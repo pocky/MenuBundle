@@ -50,10 +50,14 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         $this->addMenuSection($rootNode);
+        $this->addControllerSection($rootNode);
 
         return $treeBuilder;
     }
 
+    /**
+     * @param ArrayNodeDefinition $node
+     */
     private function addMenuSection(ArrayNodeDefinition $node)
     {
         $node
@@ -69,6 +73,30 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('type')->defaultValue('Black\\Bundle\\MenuBundle\\Form\\Type\\MenuType')->end()
                                 ->scalarNode('item_type')->defaultValue('Black\\Bundle\\MenuBundle\\Form\\Type\\ItemType')->end()
                                 ->scalarNode('handler')->defaultValue('Black\\Bundle\\MenuBundle\\Form\\Handler\\MenuFormHandler')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addControllerSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('controller')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('class')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('menu')
+                                    ->defaultValue('Black\\Bundle\\MenuBundle\\Controller\\MenuController')
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

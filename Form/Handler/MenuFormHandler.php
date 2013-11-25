@@ -19,6 +19,7 @@ use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use Black\Bundle\MenuBundle\Model\MenuInterface;
 use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Black\Bundle\CommonBundle\Form\Handler\HandlerInterface;
 
 /**
  * Class MenuFormHandler
@@ -27,38 +28,36 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuFormHandler
+class MenuFormHandler implements HandlerInterface
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
-     */
-    protected $router;
-
-    /**
-     * @var \Symfony\Component\Form\FormInterface
-     */
-    protected $form;
-
-    /**
-     * @var MenuManagerInteface|\Black\Bundle\MenuBundle\Model\MenuManagerInterface
-     */
-    protected $menuManager;
-
     /**
      * @var
      */
     protected $factory;
-
+    /**
+     * @var \Symfony\Component\Form\FormInterface
+     */
+    protected $form;
+    /**
+     * @var \Black\Bundle\MenuBundle\Model\MenuManagerInterface
+     */
+    protected $manager;
+    /**
+     * @var
+     */
+    protected $parameters;
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+    /**
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    protected $router;
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
-
     /**
      * @var
      */
@@ -66,18 +65,42 @@ class MenuFormHandler
 
     /**
      * @param FormInterface $form
-     * @param MenuManagerInterface $menuManager
+     * @param MenuManagerInterface $manager
      * @param Request $request
      * @param Router $router
      * @param SessionInterface $session
      */
-    public function __construct(FormInterface $form, MenuManagerInterface $menuManager, Request $request, Router $router, SessionInterface $session)
+    public function __construct(
+        FormInterface $form,
+        MenuManagerInterface $manager,
+        Request $request,
+        Router $router,
+        SessionInterface $session,
+        array $parameters = array()
+    )
     {
         $this->form         = $form;
-        $this->menuManager  = $menuManager;
+        $this->manager      = $manager;
+        $this->parameters   = $parameters;
         $this->request      = $request;
         $this->router       = $router;
         $this->session      = $session;
+    }
+
+    /**
+     * @return FormInterface
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
@@ -85,7 +108,7 @@ class MenuFormHandler
      *
      * @return bool
      */
-    public function process(MenuInterface $menu)
+    public function process($menu)
     {
         $this->form->setData($menu);
 
@@ -106,14 +129,6 @@ class MenuFormHandler
     }
 
     /**
-     * @return FormInterface
-     */
-    public function getForm()
-    {
-        return $this->form;
-    }
-
-    /**
      * @param $url
      */
     public function setUrl($url)
@@ -122,49 +137,15 @@ class MenuFormHandler
     }
 
     /**
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param $name
-     * @param $msg
-     * @return mixed
-     */
-    protected function setFlash($name, $msg)
-    {
-        return $this->session->getFlashBag()->add($name, $msg);
-    }
-
-    /**
-     * @param MenuInterface $menu
+     * @param       $route
+     * @param array $parameters
+     * @param       $referenceType
      *
-     * @return bool
+     * @return mixed
      */
-    protected function onSave(MenuInterface $menu)
+    protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        if (!$menu->getId()) {
-            $this->menuManager->persist($menu);
-        }
-
-        $this->menuManager->flush();
-
-        if ($this->form->get('save')->isClicked()) {
-            $this->setUrl($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));
-            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
-
-            return true;
-        }
-
-        if ($this->form->get('saveAndAdd')->isClicked()) {
-            $this->setUrl($this->generateUrl('admin_menu_new'));
-            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
-
-            return true;
-        }
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
     /**
@@ -172,13 +153,13 @@ class MenuFormHandler
      *
      * @return bool
      */
-    protected function onDelete($menu)
+    protected function onDelete(MenuInterface $menu)
     {
-        $this->menuManager->remove($menu);
-        $this->menuManager->flush();
+        $this->manager->remove($menu);
+        $this->manager->flush();
 
         $this->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
-        $this->setUrl($this->generateUrl('admin_menu_index'));
+        $this->setUrl($this->generateUrl($this->parameters['route']['index']));
 
         return true;
     }
@@ -194,14 +175,40 @@ class MenuFormHandler
     }
 
     /**
-     * @param       $route
-     * @param array $parameters
-     * @param       $referenceType
+     * @param MenuInterface $menu
      *
+     * @return bool
+     */
+    protected function onSave(MenuInterface $menu)
+    {
+        if (!$menu->getId()) {
+            $this->manager->persist($menu);
+        }
+
+        $this->manager->flush();
+
+        if ($this->form->get('save')->isClicked()) {
+            $this->setUrl($this->generateUrl($this->parameters['route']['update'], array('id' => $menu->getId())));
+            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
+
+            return true;
+        }
+
+        if ($this->form->get('saveAndAdd')->isClicked()) {
+            $this->setUrl($this->generateUrl($this->parameters['route']['create']));
+            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
+
+            return true;
+        }
+    }
+
+    /**
+     * @param $name
+     * @param $msg
      * @return mixed
      */
-    public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    protected function setFlash($name, $msg)
     {
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->session->getFlashBag()->add($name, $msg);
     }
 }
