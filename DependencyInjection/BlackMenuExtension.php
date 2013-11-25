@@ -58,8 +58,17 @@ class BlackMenuExtension extends Extension
         if (!empty($config['menu'])) {
             $this->loadMenu($config['menu'], $container, $loader);
         }
+
+        if (!empty($config['controller'])) {
+            $this->loadController($config['controller'], $container, $loader);
+        }
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param XmlFileLoader    $loader
+     */
     private function loadMenu(array $config, ContainerBuilder $container, XmlFileLoader $loader)
     {
         foreach (array('menu') as $basename) {
@@ -71,6 +80,29 @@ class BlackMenuExtension extends Extension
             ));
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param XmlFileLoader    $loader
+     */
+    private function loadController(array $config, ContainerBuilder $container, XmlFileLoader $loader)
+    {
+        $loader->load('controller.xml');
+
+        $this->remapParametersNamespaces(
+            $config,
+            $container,
+            array(
+                'class'    => 'black_menu.controller.class.%s',
+            )
+        );
+    }
+
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $map
+     */
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)
     {
         foreach ($map as $name => $paramName) {
@@ -80,6 +112,11 @@ class BlackMenuExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $namespaces
+     */
     protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
     {
         foreach ($namespaces as $ns => $map) {

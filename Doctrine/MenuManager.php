@@ -12,6 +12,7 @@
 namespace Black\Bundle\MenuBundle\Doctrine;
 
 use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
+use Black\Bundle\CommonBundle\Doctrine\ManagerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -21,7 +22,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuManager implements MenuManagerInterface
+class MenuManager implements MenuManagerInterface, ManagerInterface
 {
     /**
      * @var ObjectManager
@@ -101,25 +102,8 @@ class MenuManager implements MenuManagerInterface
         if (!$model instanceof $this->class) {
             throw new \InvalidArgumentException(gettype($model));
         }
-        $this->getManager()->remove($model);
-    }
 
-    /**
-     * @param mixed $model
-     */
-    public function persistAndFlush($model)
-    {
-        $this->persist($model);
-        $this->flush();
-    }
-
-    /**
-     * @param mixed $model
-     */
-    public function removeAndFlush($model)
-    {
         $this->getManager()->remove($model);
-        $this->getManager()->flush();
     }
 
     /**
@@ -139,6 +123,24 @@ class MenuManager implements MenuManagerInterface
     protected function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findDocuments()
+    {
+        return $this->repository->findAll();
+    }
+
+    /**
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function findDocument($value)
+    {
+        return $this->getRepository()->getMenuByIdOrSlug($value);
     }
 
     /**
