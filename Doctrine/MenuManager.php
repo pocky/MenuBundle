@@ -180,4 +180,9 @@ class MenuManager implements MenuManagerInterface
     {
         return $this->getRepository()->getMenuWhereItem($key);
     }
+
+    public function countMenus()
+    {
+        return $this->getRepository()->countMenus();
+    }
 }
