@@ -47,6 +47,10 @@ class BlackMenuExtension extends Extension
             throw new \InvalidArgumentException(sprintf('The db_driver "%s" is not supported by engine', $config['db_driver']));
         }
 
+        foreach (array('configuration') as $basename) {
+            $loader->load(sprintf('%s.xml', $basename));
+        }
+
         $this->remapParametersNamespaces($config, $container, array(
                 ''      => array(
                     'menu_class'          => 'black_menu.menu.model.class',

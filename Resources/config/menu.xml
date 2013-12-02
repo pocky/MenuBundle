@@ -24,17 +24,7 @@
 
         <service id="black_menu.menu.form.handler" class="%black_menu.menu.form.handler%" scope="request" public="true">
             <argument type="service" id="black_menu.menu.form" />
-            <argument type="service" id="black_menu.manager.menu" />
-            <argument type="service" id="request" />
-            <argument type="service" id="router" />
-            <argument type="service" id="session" />
-            <argument type="collection">
-                <argument key="route" type="collection">
-                    <argument key="index">menu_index</argument>
-                    <argument key="create">menu_create</argument>
-                    <argument key="update">menu_update</argument>
-                </argument>
-            </argument>
+            <argument type="service" id="black_menu.configuration.menu" />
         </service>
     </services>
 </container>
