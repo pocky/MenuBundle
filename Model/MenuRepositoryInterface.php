@@ -25,12 +25,12 @@ interface MenuRepositoryInterface
      *
      * @return mixed
      */
-    function getMenuByIdOrSlug($key);
+    public function getMenuByIdOrSlug($key);
 
     /**
      * @param $key
      *
      * @return mixed
      */
-    function getMenuWhereItem($key);
+    public function getMenuWhereItem($key);
 }

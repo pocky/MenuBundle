@@ -25,19 +25,17 @@ use Doctrine\Common\Persistence\ObjectManager;
 class MenuManager implements MenuManagerInterface, ManagerInterface
 {
     /**
+     * @var string
+     */
+    protected $class;
+    /**
      * @var ObjectManager
      */
     protected $manager;
-
     /**
      * @var ObjectRepository
      */
     protected $repository;
-
-    /**
-     * @var string
-     */
-    protected $class;
 
     /**
      * Constructor
@@ -55,22 +53,6 @@ class MenuManager implements MenuManagerInterface, ManagerInterface
     }
 
     /**
-     * @return ObjectManager|mixed
-     */
-    public function getManager()
-    {
-        return $this->manager;
-    }
-
-    /**
-     * @return ObjectRepository
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
      * @param object $model
      *
      * @throws \InvalidArgumentException
@@ -82,6 +64,14 @@ class MenuManager implements MenuManagerInterface, ManagerInterface
         }
 
         $this->getManager()->persist($model);
+    }
+
+    /**
+     * @return ObjectManager|mixed
+     */
+    public function getManager()
+    {
+        return $this->manager;
     }
 
     /**
@@ -144,6 +134,14 @@ class MenuManager implements MenuManagerInterface, ManagerInterface
     }
 
     /**
+     * @return ObjectRepository
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
      * @param integer $id
      * 
      * @return Menu
@@ -183,6 +181,9 @@ class MenuManager implements MenuManagerInterface, ManagerInterface
         return $this->getRepository()->getMenuWhereItem($key);
     }
 
+    /**
+     * @return mixed
+     */
     public function countMenus()
     {
         return $this->getRepository()->countMenus();
