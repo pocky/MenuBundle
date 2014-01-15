@@ -153,7 +153,7 @@ class MenuFormHandler implements HandlerInterface
         $this->configuration->getManager()->flush();
 
         if ($this->form->get('save')->isClicked()) {
-            $this->setUrl($this->generateUrl($this->configuration->getParameter('route')['update'], array('id' => $menu->getId())));
+            $this->setUrl($this->generateUrl($this->configuration->getParameter('route')['update'], array('value' => $menu->getId())));
             $this->configuration->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
 
             return true;
