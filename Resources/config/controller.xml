@@ -12,9 +12,7 @@
         <service id="black_menu.exception.menu" class="%black_menu.exception.class%" />
 
         <service id="black_menu.controller.menu" class="%black_menu.controller.class.menu%" scope="request">
-            <argument type="service" id="black_common.controller.common" />
-            <argument type="service" id="black_menu.exception.menu" />
-            <argument type="service" id="black_menu.manager.menu" />
+            <argument type="service" id="black_menu.configuration.menu" />
             <argument type="service" id="black_menu.menu.form.handler" />
         </service>
     </services>

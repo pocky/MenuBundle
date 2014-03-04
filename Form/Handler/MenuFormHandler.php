@@ -12,14 +12,10 @@
 namespace Black\Bundle\MenuBundle\Form\Handler;
 
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
-use Black\Bundle\MenuBundle\Model\MenuInterface;
-use Black\Bundle\MenuBundle\Model\MenuManagerInterface;
+use Black\Bundle\CommonBundle\Configuration\Configuration;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Black\Bundle\CommonBundle\Form\Handler\HandlerInterface;
+use Black\Bundle\MenuBundle\Model\MenuInterface;
 
 /**
  * Class MenuFormHandler
@@ -31,33 +27,13 @@ use Black\Bundle\CommonBundle\Form\Handler\HandlerInterface;
 class MenuFormHandler implements HandlerInterface
 {
     /**
-     * @var
-     */
-    protected $factory;
-    /**
      * @var \Symfony\Component\Form\FormInterface
      */
     protected $form;
     /**
-     * @var \Black\Bundle\MenuBundle\Model\MenuManagerInterface
-     */
-    protected $manager;
-    /**
      * @var
      */
-    protected $parameters;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
-     */
-    protected $router;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
+    protected $configuration;
     /**
      * @var
      */
@@ -65,26 +41,15 @@ class MenuFormHandler implements HandlerInterface
 
     /**
      * @param FormInterface $form
-     * @param MenuManagerInterface $manager
-     * @param Request $request
-     * @param Router $router
-     * @param SessionInterface $session
+     * @param Configuration $configuration
      */
     public function __construct(
         FormInterface $form,
-        MenuManagerInterface $manager,
-        Request $request,
-        Router $router,
-        SessionInterface $session,
-        array $parameters = array()
+        Configuration $configuration
     )
     {
-        $this->form         = $form;
-        $this->manager      = $manager;
-        $this->parameters   = $parameters;
-        $this->request      = $request;
-        $this->router       = $router;
-        $this->session      = $session;
+        $this->form             = $form;
+        $this->configuration    = $configuration;
     }
 
     /**
@@ -112,9 +77,9 @@ class MenuFormHandler implements HandlerInterface
     {
         $this->form->setData($menu);
 
-        if ('POST' === $this->request->getMethod()) {
+        if ('POST' === $this->configuration->getRequest()->getMethod()) {
 
-            $this->form->handleRequest($this->request);
+            $this->form->handleRequest($this->configuration->getRequest());
 
             if ($this->form->has('delete') && $this->form->get('delete')->isClicked()) {
                 return $this->onDelete($menu);
@@ -145,7 +110,7 @@ class MenuFormHandler implements HandlerInterface
      */
     protected function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->configuration->getRouter()->generate($route, $parameters, $referenceType);
     }
 
     /**
@@ -155,11 +120,11 @@ class MenuFormHandler implements HandlerInterface
      */
     protected function onDelete(MenuInterface $menu)
     {
-        $this->manager->remove($menu);
-        $this->manager->flush();
+        $this->configuration->getManager()->remove($menu);
+        $this->configuration->getManager()->flush();
 
-        $this->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
-        $this->setUrl($this->generateUrl($this->parameters['route']['index']));
+        $this->configuration->setFlash('success', 'black.bundle.menu.success.menu.admin.delete');
+        $this->setUrl($this->generateUrl($this->configuration->getParameter('route')['index']));
 
         return true;
     }
@@ -169,7 +134,7 @@ class MenuFormHandler implements HandlerInterface
      */
     protected function onFailed()
     {
-        $this->setFlash('error', 'black.bundle.menu.error.menu.admin.edit.not.valid');
+        $this->configuration->setFlash('error', 'black.bundle.menu.error.menu.admin.edit.not.valid');
 
         return false;
     }
@@ -182,33 +147,23 @@ class MenuFormHandler implements HandlerInterface
     protected function onSave(MenuInterface $menu)
     {
         if (!$menu->getId()) {
-            $this->manager->persist($menu);
+            $this->configuration->getManager()->persist($menu);
         }
 
-        $this->manager->flush();
+        $this->configuration->getManager()->flush();
 
         if ($this->form->get('save')->isClicked()) {
-            $this->setUrl($this->generateUrl($this->parameters['route']['update'], array('id' => $menu->getId())));
-            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
+            $this->setUrl($this->generateUrl($this->configuration->getParameter('route')['update'], array('value' => $menu->getId())));
+            $this->configuration->setFlash('success', 'black.bundle.menu.success.menu.admin.save');
 
             return true;
         }
 
         if ($this->form->get('saveAndAdd')->isClicked()) {
-            $this->setUrl($this->generateUrl($this->parameters['route']['create']));
-            $this->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
+            $this->setUrl($this->generateUrl($this->configuration->getParameter('route')['create']));
+            $this->configuration->setFlash('success', 'black.bundle.menu.success.menu.admin.saveAndAdd');
 
             return true;
         }
-    }
-
-    /**
-     * @param $name
-     * @param $msg
-     * @return mixed
-     */
-    protected function setFlash($name, $msg)
-    {
-        return $this->session->getFlashBag()->add($name, $msg);
     }
 }

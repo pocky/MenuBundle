@@ -11,14 +11,10 @@
 
 namespace Black\Bundle\MenuBundle\Controller;
 
-use Black\Bundle\CommonBundle\Controller\ControllerInterface;
-use Black\Bundle\CommonBundle\Doctrine\ManagerInterface;
-use Black\Bundle\CommonBundle\Form\Handler\HandlerInterface;
+use Black\Bundle\CommonBundle\Controller\CommonController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Class MenuController
@@ -29,43 +25,8 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
  * @author  Alexandre Balmes <albalmes@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php MIT
  */
-class MenuController implements ControllerInterface
+class MenuController extends CommonController
 {
-    /**
-     * @var \Black\Bundle\CommonBundle\Controller\ControllerInterface
-     */
-    protected $controller;
-    /**
-     * @var \Black\Bundle\CommonBundle\Form\Handler\HandlerInterface
-     */
-    protected $handler;
-    /**
-     * @var \Black\Bundle\CommonBundle\Doctrine\ManagerInterface
-     */
-    protected $manager;
-
-    /**
-     * @param ControllerInterface    $controller
-     * @param HttpExceptionInterface $exception
-     * @param ManagerInterface       $manager
-     * @param HandlerInterface       $handler
-     */
-    public function __construct(
-        ControllerInterface $controller,
-        HttpExceptionInterface $exception,
-        ManagerInterface $manager,
-        HandlerInterface $handler
-    )
-    {
-        $this->controller   = $controller;
-        $this->manager      = $manager;
-        $this->handler      = $handler;
-
-        $controller->setException($exception);
-        $controller->setManager($manager);
-        $controller->setHandler($handler);
-    }
-
     /**
      * @Method({"GET", "POST"})
      * @Route("/new", name="menu_create")
@@ -75,7 +36,7 @@ class MenuController implements ControllerInterface
      */
     public function createAction()
     {
-        return $this->controller->createAction();
+        return parent::createAction();
     }
 
     /**
@@ -88,31 +49,7 @@ class MenuController implements ControllerInterface
      */
     public function deleteAction($value)
     {
-        return $this->controller->deleteAction($value);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getException()
-    {
-        return $this->exception;
-    }
-
-    /**
-     * @return HandlerInterface
-     */
-    public function getHandler()
-    {
-        return $this->handler;
-    }
-
-    /**
-     * @return ManagerInterface
-     */
-    public function getManager()
-    {
-        return $this->manager;
+        return parent::deleteAction($value);
     }
 
     /**
@@ -124,11 +61,11 @@ class MenuController implements ControllerInterface
      */
     public function indexAction()
     {
-        return $this->controller->indexAction();
+        return parent::indexAction();
     }
 
     /**
-     * @param string $key
+     * @param string $value
      *
      * @Method("GET")
      * @Route("/where/{value}", name="_find_where_menu")
@@ -138,7 +75,7 @@ class MenuController implements ControllerInterface
      */
     public function internalMenuAction($value)
     {
-        $documentManager    = $this->getManager();
+        $documentManager    = $this->configuration->getManager();
         $document           = $documentManager->findMenuWhereItem($value);
 
         if (!$document) {
@@ -147,12 +84,12 @@ class MenuController implements ControllerInterface
 
         return array(
             'document'  => $document,
-            'path'      => $this->controller->getRequest()->get('path')
+            'path'      => $this->configuration->getRequest()->get('path')
         );
     }
 
     /**
-     * @param string $key
+     * @param string $value
      *
      * @Method("GET")
      * @Route("/{value}", name="_find_menu")
@@ -162,7 +99,7 @@ class MenuController implements ControllerInterface
      */
     public function menuAction($value)
     {
-        $documentManager    = $this->getManager();
+        $documentManager    = $this->configuration->getManager();
         $document           = $documentManager->findDocument($value);
 
         if (!$document) {
@@ -171,22 +108,22 @@ class MenuController implements ControllerInterface
 
         return array(
             'document'  => $document,
-            'path'      => $this->controller->getRequest()->get('path')
+            'path'      => $this->configuration->getRequest()->get('path')
         );
     }
 
     /**
      * @Method("GET")
-     * @Route("/{value}.html", name="menu_show")
+     * @Route("/{value}.html", name="menu_read")
      * @Template()
      *
      * @param string $slug
      *
      * @return Template
      */
-    public function showAction($value)
+    public function readAction($value)
     {
-        return $this->controller->showAction($value);
+        return parent::readAction($value);
     }
 
     /**
@@ -200,6 +137,6 @@ class MenuController implements ControllerInterface
      */
     public function updateAction($value)
     {
-        return $this->controller->updateAction($value);
+        return parent::updateAction($value);
     }
 }

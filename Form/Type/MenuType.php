@@ -72,7 +72,7 @@ class MenuType extends AbstractType
                     'attr'          => array(
                         'class' => 'item-collection',
                         'add'   => 'add-another-item'
-                    ),
+                    )
                 )
             );
     }
